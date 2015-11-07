@@ -7,6 +7,7 @@ import com.jurin_n.entity.Team;
 
 @Stateless
 public class TeamApplicationService {
+
 	@EJB
 	TeamService ts;
 	

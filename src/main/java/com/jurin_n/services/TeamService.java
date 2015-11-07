@@ -13,6 +13,17 @@ public class TeamService {
 	@PersistenceContext
 	private EntityManager em;
 	
+	public void setEntityManager(EntityManager em){
+		if(this.em != null){
+			Class<?> c = this.getClass();
+			throw new IllegalStateException(
+					"EntityManager instance 'em' is not null."
+				  + "This Method "+ c.getName() + ".setEntityManager"
+				  +" is for Using Unit Test.");
+		}
+		this.em = em;
+	}
+
 	public void createTeam(Team t){
 		JPATeamRepository jtr = new JPATeamRepository(em);
 		jtr.add(t);
