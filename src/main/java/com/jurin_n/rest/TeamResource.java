@@ -40,7 +40,7 @@ public class TeamResource {
 
 		  //サービス
 		  ts.createTeam(t);
-
+		  
 		  //レスポンス
 		  return Response
 				  .status(Response.Status.CREATED)

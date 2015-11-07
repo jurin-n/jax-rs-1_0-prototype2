@@ -9,8 +9,9 @@ import com.jurin_n.domain.model.team.TeamRepository;
 import com.jurin_n.entity.Team;
 
 public class JPATeamRepository implements TeamRepository {
-	private EntityManager em;
 	
+	private EntityManager em;
+
 	public JPATeamRepository(EntityManager em) {
 		this.em = em;
 	}
