@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.jurin_n.entity.Team;
-import com.jurin_n.services.TeamService;
+import com.jurin_n.services.TeamApplicationService;
 
 @Path("/team")
 @RequestScoped
@@ -20,7 +20,7 @@ import com.jurin_n.services.TeamService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class TeamResource {
 	  @Inject
-	  TeamService ts;
+	  TeamApplicationService ts;
 
 	  @GET
 	  @Path("{id}")
