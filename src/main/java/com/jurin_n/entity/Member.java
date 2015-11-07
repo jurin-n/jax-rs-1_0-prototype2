@@ -35,8 +35,14 @@ public class Member {
 		this.role = role;
 	}
 
-	public Member() {
+	public Member(){
 		super();
+	}
+	
+	public Member(String name, Role role) {
+		super();
+		this.name = name;
+		this.role = role;
 	}
    
 }
