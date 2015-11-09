@@ -1,6 +1,5 @@
 package com.jurin_n.services;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -8,7 +7,7 @@ import com.jurin_n.entity.Team;
 
 @Stateless
 public class TeamApplicationService {
-	@EJB TeamService ts;	
+	@Inject TeamService ts;	
 	@Inject MemberService ms;
 	
 	public void createTeam(Team t){
