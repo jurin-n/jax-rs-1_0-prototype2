@@ -5,6 +5,9 @@ JAX-RS1.1試してます。JPAも使います。
 
 
 ##参考文献
+###JavaEE6仕様
+* Java EE 6 Technologies http://www.oracle.com/technetwork/java/javaee/tech/javaee6technologies-1955512.html
+
 ###Web
 * 実践に向けたドメイン駆動設計のエッセンス http://www.slideshare.net/masuda220/3-48659634
 * Java EE 6: Understanding Contexts and Dependency Injection (CDI), Part 1 https://blogs.oracle.com/nishigaya/entry/javaee6_understanding_cdi_part_1
