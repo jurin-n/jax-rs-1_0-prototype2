@@ -1,6 +1,7 @@
 package com.jurin_n.services;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -12,6 +13,9 @@ public class TeamService {
 	
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Inject
+	JPATeamRepository repo;
 	
 	public void setEntityManager(EntityManager em){
 		if(this.em != null){
@@ -25,14 +29,14 @@ public class TeamService {
 	}
 
 	public void createTeam(Team t){
-		JPATeamRepository jtr = new JPATeamRepository(em);
-		jtr.add(t);
+		repo.setEntityManager(em);
+		repo.add(t);
 	}
 	
 	
 	public Team getTeamById(String id){
-		JPATeamRepository jtr = new JPATeamRepository(em);
-		Team t = jtr.teamOfId(id);
+		repo.setEntityManager(em);
+		Team t = repo.teamOfId(id);
 		return t;
 	}
 }
