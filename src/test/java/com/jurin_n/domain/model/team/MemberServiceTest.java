@@ -1,14 +1,9 @@
-package com.jurin_n.services;
-
-import static org.junit.Assert.*;
+package com.jurin_n.domain.model.team;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Test;
-
-import com.jurin_n.entity.Member;
-import com.jurin_n.entity.Role;
 
 public class MemberServiceTest {
 	/*

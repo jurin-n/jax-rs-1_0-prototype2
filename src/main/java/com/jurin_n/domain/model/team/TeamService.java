@@ -1,11 +1,10 @@
-package com.jurin_n.services;
+package com.jurin_n.domain.model.team;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.jurin_n.entity.Team;
 import com.jurin_n.infrastructure.persistence.JPATeamRepository;
 
 @Stateless

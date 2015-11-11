@@ -1,9 +1,11 @@
-package com.jurin_n.services;
+package com.jurin_n.application;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import com.jurin_n.entity.Team;
+import com.jurin_n.domain.model.team.MemberService;
+import com.jurin_n.domain.model.team.Team;
+import com.jurin_n.domain.model.team.TeamService;
 
 @Stateless
 public class TeamApplicationService {

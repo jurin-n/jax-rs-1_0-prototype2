@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.jurin_n.domain.model.team.TeamRepository;
-import com.jurin_n.entity.Team;
+import com.jurin_n.domain.model.team.Team;
 
 public class JPATeamRepository implements TeamRepository {
 	

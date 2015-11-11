@@ -4,8 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 
-import com.jurin_n.entity.Team;
-
 public interface TeamRepository {
 	public void setEntityManager(EntityManager em);
 	public void add(Team aTeam);
