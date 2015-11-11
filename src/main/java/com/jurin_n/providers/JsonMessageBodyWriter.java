@@ -12,11 +12,9 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
-//import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.jurin_n.entity.Team;
+import com.jurin_n.domain.model.team.Team;
 
 @Provider
 @Produces(MediaType.APPLICATION_JSON)

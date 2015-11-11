@@ -1,4 +1,4 @@
-package com.jurin_n.entity;
+package com.jurin_n.domain.model.error;
 
 public class ErrorResponse {
 	private String errorCode;

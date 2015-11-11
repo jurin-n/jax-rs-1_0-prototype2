@@ -1,9 +1,6 @@
-package com.jurin_n.services;
+package com.jurin_n.domain.model.team;
 
 import java.util.Collection;
-
-import com.jurin_n.entity.Member;
-import com.jurin_n.entity.Role;
 
 public class MemberService {
 	
