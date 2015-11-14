@@ -35,7 +35,6 @@ public class PracticeMenuTest {
     	pro.put("javax.persistence.jdbc.user", username);
     	pro.put("javax.persistence.jdbc.password", password);
     	pro.put("javax.persistence.jdbc.url",
-    			//"jdbc:postgresql://db1.c66qnw4o8ewu.ap-northeast-1.rds.amazonaws.com:5432/db1");
     			"jdbc:postgresql://" + host+ ":"+ port +"/" + databaseName);
     	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest")
                           .createEntityManager();
