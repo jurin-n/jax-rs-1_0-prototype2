@@ -2,6 +2,8 @@ package com.jurin_n.domain.model.practice;
 
 import static org.junit.Assert.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 

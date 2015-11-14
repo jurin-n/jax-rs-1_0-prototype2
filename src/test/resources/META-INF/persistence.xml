@@ -12,9 +12,9 @@
 			<property name="javax.persistence.schema-generation.create-source" value="metadata"/>
 			<property name="eclipselink.logging.level" value="ALL"/>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-			<property name="javax.persistence.jdbc.user" value="jurin_n"/>
-			<property name="javax.persistence.jdbc.password" value="ukiuki117"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db1.c66qnw4o8ewu.ap-northeast-1.rds.amazonaws.com:5432/db1"/>
+			<property name="javax.persistence.jdbc.user" value=""/>
+			<property name="javax.persistence.jdbc.password" value=""/>
+			<property name="javax.persistence.jdbc.url" value=""/>
 		</properties>
 	</persistence-unit>
 </persistence>
