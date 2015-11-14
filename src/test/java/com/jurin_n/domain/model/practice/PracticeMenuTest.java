@@ -16,6 +16,27 @@ import com.jurin_n.infrastructure.persistence.JPAPracticeMenuRepository;
 
 public class PracticeMenuTest {
     private static EntityManager getEm() {
+    	
+    	URI dbUri = null;
+		try {
+			dbUri = new URI(System.getenv("DATABASE_URL"));
+		} catch (URISyntaxException e) {
+			fail();
+		}	
+		String username = dbUri.getUserInfo().split(":")[0];
+		String password = dbUri.getUserInfo().split(":")[1];
+		
+		String host = dbUri.getHost();
+		int port = dbUri.getPort();
+		String databaseName = dbUri.getPath().substring(1);
+		
+    	Map<String,String> pro = new HashMap<>();
+    	
+    	pro.put("javax.persistence.jdbc.user", username);
+    	pro.put("javax.persistence.jdbc.password", password);
+    	pro.put("javax.persistence.jdbc.url",
+    			//"jdbc:postgresql://db1.c66qnw4o8ewu.ap-northeast-1.rds.amazonaws.com:5432/db1");
+    			"jdbc:postgresql://" + host+ ":"+ port +"/" + databaseName);
     	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest")
                           .createEntityManager();
     }
