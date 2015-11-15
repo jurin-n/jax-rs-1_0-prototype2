@@ -42,8 +42,8 @@ public class PracticePlanServiceTest {
                           .createEntityManager();
     }
 	
-    //@Test
-	@Ignore //PracticePlanエンティティに@Embedded３つつけているのでエラー。
+    @Test
+	//@Ignore //PracticePlanエンティティに@Embedded３つつけているのでエラー。
 	public void test() {
 		EntityManager em = this.getEm();
 		PracticePlanService sut = new PracticePlanService();

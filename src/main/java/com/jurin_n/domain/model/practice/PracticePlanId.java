@@ -1,11 +1,10 @@
 package com.jurin_n.domain.model.practice;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class PracticePlanId {
-	@Column
+	
 	private String id;
 	
 	public PracticePlanId(){

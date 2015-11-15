@@ -2,6 +2,9 @@ package com.jurin_n.domain.model.practice;
 
 import java.util.Date;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,9 +16,11 @@ import javax.persistence.TemporalType;
 public class PracticePlan {
 	@EmbeddedId
 	private PracticePlanId practicePlanId;
-	@EmbeddedId
+	@Embedded
+	@AttributeOverride(name="id", column=@Column(name = "menuId"))
 	private PracticeMenuId practiceMenuId;
-	@EmbeddedId
+	@Embedded
+	@AttributeOverride(name="id", column=@Column(name = "memberId"))
 	private PracticeMemberId memberId;
 	PracticeStatus status;
 	@Temporal(TemporalType.TIMESTAMP)
