@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import com.jurin_n.infrastructure.persistence.JPAPracticeMenuRepository;
 
-public class PracticeMenuTest {
+public class PracticeMenuServiceTest {
     private static EntityManager getEm() {
     	
     	URI dbUri = null;
@@ -36,7 +36,7 @@ public class PracticeMenuTest {
     	pro.put("javax.persistence.jdbc.password", password);
     	pro.put("javax.persistence.jdbc.url",
     			"jdbc:postgresql://" + host+ ":"+ port +"/" + databaseName);
-    	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest")
+    	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest",pro)
                           .createEntityManager();
     }
 	@Test

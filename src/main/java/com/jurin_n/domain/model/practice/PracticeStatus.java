@@ -1,5 +1,5 @@
 package com.jurin_n.domain.model.practice;
 
-public class MemberId {
-
+public enum PracticeStatus {
+	OPEN,CLOSE;
 }

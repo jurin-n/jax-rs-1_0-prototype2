@@ -4,19 +4,19 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class PracticePlanId {
+public class PracticeMemberId {
 	@Column
 	private String id;
 	
-	public PracticePlanId(){
+	public PracticeMemberId(){
 		super();
 	}
 	
-	public PracticePlanId(String anId){
+	public PracticeMemberId(String anId){
 		super();
 		this.setId(anId);
 	}
-
+	
 	private void setId(String anId) {
 		this.id = anId;
 	}
