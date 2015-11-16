@@ -24,7 +24,6 @@ public class JsonMessageBodyReader implements MessageBodyReader<List<PracticePla
 
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotation, MediaType mediaType) {
-System.out.println("[debug]JsonMessageBodyReader.001" + type.getName());
 		return type==List.class;
 	}
 

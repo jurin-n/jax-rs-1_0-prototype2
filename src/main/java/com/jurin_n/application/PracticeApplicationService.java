@@ -12,13 +12,6 @@ public class PracticeApplicationService {
 	
 	public List<PracticePlan> getPracticePlanList() {
 		List<PracticePlan> list  = ps.getPracticePlanList();
-System.out.println("[debug]PracticeApplicationService="+list.getClass().getName());		
-		/*
-		for(PracticePlan plan :list){
-			System.out.println(plan.getPracticePlanId().getId());
-		}
-		*/
-		
 		return list;
 	}
 
