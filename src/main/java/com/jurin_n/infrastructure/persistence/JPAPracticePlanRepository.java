@@ -1,8 +1,11 @@
 package com.jurin_n.infrastructure.persistence;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
-import com.jurin_n.domain.model.practice.PracticeMenuId;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import com.jurin_n.domain.model.practice.PracticePlan;
 import com.jurin_n.domain.model.practice.PracticePlanId;
 import com.jurin_n.domain.model.practice.PracticePlanRepository;
@@ -39,6 +42,13 @@ public class JPAPracticePlanRepository implements PracticePlanRepository {
 		return new PracticePlanId(
 				java.util.UUID.randomUUID().toString().toUpperCase()
 				);
+	}
+
+	@Override
+	public List<PracticePlan> getAll() {
+		TypedQuery<PracticePlan> query
+		    = em.createNamedQuery("PracticePlan.FIND_ALL",PracticePlan.class);
+		return query.getResultList();
 	}
 
 }

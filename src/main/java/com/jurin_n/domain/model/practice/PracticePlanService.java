@@ -1,6 +1,7 @@
 package com.jurin_n.domain.model.practice;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -43,5 +44,10 @@ public class PracticePlanService {
 		repo.add(plan);
 		
 		return plan.getPracticePlanId();
+	}
+
+	public List<PracticePlan> getPracticePlanList() {
+		repo.setEntityManager(em);
+		return repo.getAll();
 	}
 }
