@@ -44,7 +44,7 @@ public class PracticePlanServiceTest {
 	
     @Test
 	//@Ignore //PracticePlanエンティティに@Embedded３つつけているのでエラー。
-	public void test() {
+	public void test練習メニューをメンバーにあたえることができる_こなす予定の練習メニューを計画できる() {
 		EntityManager em = this.getEm();
 		PracticePlanService sut = new PracticePlanService();
 		JPAPracticePlanRepository repo = new JPAPracticePlanRepository();

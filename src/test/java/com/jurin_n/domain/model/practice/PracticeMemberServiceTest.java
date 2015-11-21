@@ -41,7 +41,7 @@ public class PracticeMemberServiceTest {
     }
     
     @Test
-	public void test() {
+	public void test練習メンバーを作成できる() {
 		EntityManager em = this.getEm();
 		
 		PracticeMemberService sut = new PracticeMemberService();

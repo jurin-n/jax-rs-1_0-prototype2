@@ -40,8 +40,9 @@ public class PracticeMenuServiceTest {
     	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest",pro)
                           .createEntityManager();
     }
-	@Test
-	public void test() {
+
+    @Test
+	public void test練習メニューを作成できる() {
 		EntityManager em = this.getEm();
 		
 		PracticeMenuService sut  = new PracticeMenuService();
