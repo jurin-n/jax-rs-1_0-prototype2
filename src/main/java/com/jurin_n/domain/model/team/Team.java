@@ -3,6 +3,7 @@ package com.jurin_n.domain.model.team;
 import java.util.List;
 
 import javax.persistence.*;
+import com.jurin_n.domain.model.BaseEntity;
 
 /**
  * Entity implementation class for Entity: Team
@@ -10,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="t_team")
-public class Team {
+public class Team extends BaseEntity {
 	
 	@Id
 	private String id;

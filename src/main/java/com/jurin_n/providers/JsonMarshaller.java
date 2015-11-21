@@ -12,16 +12,17 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
-import org.codehaus.jackson.map.ObjectMapper;
+//import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.jurin_n.domain.model.team.Team;
+import com.jurin_n.domain.model.BaseEntity;
 
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
-public class JsonMessageBodyWriter implements MessageBodyWriter<Team> {
+public class JsonMarshaller implements MessageBodyWriter<BaseEntity> {
 
 	@Override
-	public long getSize(Team arg0, Class<?> type
+	public long getSize(BaseEntity arg0, Class<?> type
 						, Type genericType, Annotation[] annotation
 						, MediaType mediaType) {
 		return -1;
@@ -29,11 +30,11 @@ public class JsonMessageBodyWriter implements MessageBodyWriter<Team> {
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotation, MediaType mediaType) {
-		return type==Team.class;
+		return type.getSuperclass()==BaseEntity.class;
 	}
 
 	@Override
-	public void writeTo(Team target, Class<?> type, Type genericType
+	public void writeTo(BaseEntity target, Class<?> type, Type genericType
 					, Annotation[] annotation, MediaType mediaType
 					, MultivaluedMap<String, Object> httpHeaders
 					, OutputStream outputStream) throws IOException, WebApplicationException {
