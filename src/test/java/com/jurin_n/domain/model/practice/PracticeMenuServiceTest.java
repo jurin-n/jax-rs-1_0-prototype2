@@ -13,6 +13,7 @@ import javax.persistence.Persistence;
 import org.junit.Test;
 
 import com.jurin_n.infrastructure.persistence.JPAPracticeMenuRepository;
+import com.jurin_n.infrastructure.persistence.JPAPracticePlanRepository;
 
 public class PracticeMenuServiceTest {
     private static EntityManager getEm() {
@@ -44,8 +45,9 @@ public class PracticeMenuServiceTest {
 		EntityManager em = this.getEm();
 		
 		PracticeMenuService sut  = new PracticeMenuService();
-		sut.setEntityManager(em);
-		sut.repo = new JPAPracticeMenuRepository();
+		JPAPracticeMenuRepository repo = new JPAPracticeMenuRepository();
+		repo.setEntityManager(em);
+		sut.repo = repo;
         
         em.getTransaction().begin();  
 		

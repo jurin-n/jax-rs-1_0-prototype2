@@ -2,20 +2,21 @@ package com.jurin_n.infrastructure.persistence;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.jurin_n.domain.model.practice.PracticePlan;
 import com.jurin_n.domain.model.practice.PracticePlanId;
 import com.jurin_n.domain.model.practice.PracticePlanRepository;
 
+@Stateless
 public class JPAPracticePlanRepository implements PracticePlanRepository {
-
+	@PersistenceContext
 	private EntityManager em;
 
-	@Override
-	public void setEntityManager(EntityManager em) {
+	public void setEntityManager(EntityManager em){
 		if(this.em != null){
 			Class<?> c = this.getClass();
 			throw new IllegalStateException(
@@ -25,7 +26,7 @@ public class JPAPracticePlanRepository implements PracticePlanRepository {
 		}
 		this.em = em;
 	}
-
+	
 	@Override
 	public void add(PracticePlan aPracticePlan) {
 		em.persist(aPracticePlan);
@@ -50,5 +51,4 @@ public class JPAPracticePlanRepository implements PracticePlanRepository {
 		    = em.createNamedQuery("PracticePlan.FIND_ALL",PracticePlan.class);
 		return query.getResultList();
 	}
-
 }

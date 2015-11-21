@@ -1,17 +1,19 @@
 package com.jurin_n.infrastructure.persistence;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import com.jurin_n.domain.model.practice.PracticeMember;
 import com.jurin_n.domain.model.practice.PracticeMemberId;
 import com.jurin_n.domain.model.practice.PracticeMemberRepository;
-import com.jurin_n.domain.model.practice.PracticeMenuId;
 
-public class JPAMemberRepository implements PracticeMemberRepository {
+@Stateless
+public class JPAPracticeMemberRepository implements PracticeMemberRepository {
+	@PersistenceContext
 	private EntityManager em;
 	
-	@Override
-	public void setEntityManager(EntityManager em) {
+	public void setEntityManager(EntityManager em){
 		if(this.em != null){
 			Class<?> c = this.getClass();
 			throw new IllegalStateException(
@@ -21,7 +23,7 @@ public class JPAMemberRepository implements PracticeMemberRepository {
 		}
 		this.em = em;
 	}
-
+	
 	@Override
 	public void add(PracticeMember aMember) {
 		em.persist(aMember);

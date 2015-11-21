@@ -1,15 +1,18 @@
 package com.jurin_n.infrastructure.persistence;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import com.jurin_n.domain.model.practice.PracticeMenu;
 import com.jurin_n.domain.model.practice.PracticeMenuId;
 import com.jurin_n.domain.model.practice.PracticeMenuRepository;
 
+@Stateless
 public class JPAPracticeMenuRepository implements PracticeMenuRepository {
+	@PersistenceContext
 	private EntityManager em;
 
-	@Override
 	public void setEntityManager(EntityManager em) {
 		if(this.em != null){
 			Class<?> c = this.getClass();

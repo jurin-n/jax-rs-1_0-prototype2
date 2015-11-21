@@ -12,7 +12,7 @@ import javax.persistence.Persistence;
 
 import org.junit.Test;
 
-import com.jurin_n.infrastructure.persistence.JPAMemberRepository;
+import com.jurin_n.infrastructure.persistence.JPAPracticeMemberRepository;
 
 public class PracticeMemberServiceTest {
     private static EntityManager getEm() {
@@ -45,8 +45,9 @@ public class PracticeMemberServiceTest {
 		EntityManager em = this.getEm();
 		
 		PracticeMemberService sut = new PracticeMemberService();
-		sut.setEntityManager(em);
-		sut.repo = new JPAMemberRepository();
+		JPAPracticeMemberRepository repo = new JPAPracticeMemberRepository();
+		repo.setEntityManager(em);
+		sut.repo = repo;
 		
         em.getTransaction().begin();  
 		

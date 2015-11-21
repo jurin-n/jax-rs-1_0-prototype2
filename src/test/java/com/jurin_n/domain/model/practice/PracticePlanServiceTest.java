@@ -47,8 +47,10 @@ public class PracticePlanServiceTest {
 	public void test() {
 		EntityManager em = this.getEm();
 		PracticePlanService sut = new PracticePlanService();
-		sut.setEntityManager(em);
-		sut.repo = new JPAPracticePlanRepository();
+		JPAPracticePlanRepository repo = new JPAPracticePlanRepository();
+		repo.setEntityManager(em);
+		sut.repo = repo;
+		
 	    em.getTransaction().begin();  
 		
 	    Date aStartDate = new Date();
