@@ -1,12 +1,16 @@
 package com.jurin_n.infrastructure.persistence;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import com.jurin_n.domain.model.practice.PracticeMember;
 import com.jurin_n.domain.model.practice.PracticeMemberId;
 import com.jurin_n.domain.model.practice.PracticeMemberRepository;
+import com.jurin_n.domain.model.practice.PracticePlan;
 
 @Stateless
 public class JPAPracticeMemberRepository implements PracticeMemberRepository {
@@ -42,4 +46,15 @@ public class JPAPracticeMemberRepository implements PracticeMemberRepository {
 				);
 	}
 
+	@Override
+	public PracticeMember getMemberById(PracticeMemberId id) {
+		return em.find(PracticeMember.class,id);
+	}
+
+	@Override
+	public List<PracticeMember> getPracticeMemberAll() {
+		TypedQuery<PracticeMember> query
+	    	= em.createNamedQuery("PracticeMember.FIND_ALL",PracticeMember.class);
+		return query.getResultList();
+	}
 }

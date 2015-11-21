@@ -4,13 +4,20 @@ import java.util.Date;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.jurin_n.domain.model.BaseEntity;
+
 @Entity
 @Table(name="t_PracticeMember")
-public class PracticeMember {
+@NamedQueries({
+	@NamedQuery(name = "PracticeMember.FIND_ALL", query = "select p from PracticeMember p")
+})
+public class PracticeMember extends BaseEntity {
 	@EmbeddedId
 	private PracticeMemberId memberId;
 	private String name;
@@ -31,7 +38,19 @@ public class PracticeMember {
 		this.updateDate = date;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public PracticeMemberId getMemberId() {
 		return memberId;
+	}
+
+	public void setMemberId(PracticeMemberId aMemberId) {
+		this.memberId = aMemberId;
 	}
 }
