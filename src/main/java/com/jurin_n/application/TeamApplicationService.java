@@ -5,19 +5,19 @@ import javax.inject.Inject;
 
 import com.jurin_n.domain.model.team.MemberService;
 import com.jurin_n.domain.model.team.Team;
-import com.jurin_n.domain.model.team.TeamService;
+import com.jurin_n.domain.model.team.TeamRepository;
 
 @Stateless
 public class TeamApplicationService {
-	@Inject TeamService ts;	
+	@Inject TeamRepository repo;
 	@Inject MemberService ms;
 	
 	public void createTeam(Team t){
-		ts.createTeam(t);
+		repo.add(t);
 	}
 	
 	public Team getTeamById(String id){
-		Team t = ts.getTeamById(id);
+		Team t = repo.teamOfId(id);
 		return t;
 	}
 
@@ -26,6 +26,6 @@ public class TeamApplicationService {
 		ms.checkMembersForSoccer(t.getMembers());
 		
 		//チーム作成
-		ts.createTeam(t);
+		repo.add(t);
 	}
 }
