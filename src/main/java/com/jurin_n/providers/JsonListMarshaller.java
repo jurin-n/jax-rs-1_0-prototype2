@@ -1,4 +1,4 @@
-package com.jurin_n.providers.model.practice;
+package com.jurin_n.providers;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,16 +14,17 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
-import org.codehaus.jackson.map.ObjectMapper;
+//import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.jurin_n.domain.model.practice.PracticePlan;
+import com.jurin_n.domain.model.BaseEntity;
 
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
-public class JsonMessageBodyWriter implements MessageBodyWriter<List<PracticePlan>> {
+public class JsonListMarshaller implements MessageBodyWriter<List<BaseEntity>> {
 
 	@Override
-	public long getSize(List<PracticePlan> arg0, Class<?> type
+	public long getSize(List<BaseEntity> arg0, Class<?> type
 						, Type genericType, Annotation[] annotation
 						, MediaType mediaType) {
 		return -1;
@@ -35,7 +36,7 @@ public class JsonMessageBodyWriter implements MessageBodyWriter<List<PracticePla
 	}
 
 	@Override
-	public void writeTo(List<PracticePlan> target, Class<?> type, Type genericType
+	public void writeTo(List<BaseEntity> target, Class<?> type, Type genericType
 					, Annotation[] annotation, MediaType mediaType
 					, MultivaluedMap<String, Object> httpHeaders
 					, OutputStream outputStream) throws IOException, WebApplicationException {

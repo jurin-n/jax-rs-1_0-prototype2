@@ -1,4 +1,4 @@
-package com.jurin_n.providers.model.practice;
+package com.jurin_n.providers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,14 +13,14 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
 
-//import com.fasterxml.jackson.databind.ObjectMapper;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+//import org.codehaus.jackson.map.ObjectMapper;
 
-import com.jurin_n.domain.model.practice.PracticePlan;
+import com.jurin_n.domain.model.BaseEntity;
 
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
-public class JsonMessageBodyReader implements MessageBodyReader<List<PracticePlan>> {
+public class JsonListUnmarshaller implements MessageBodyReader<List<BaseEntity>> {
 
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotation, MediaType mediaType) {
@@ -28,7 +28,7 @@ public class JsonMessageBodyReader implements MessageBodyReader<List<PracticePla
 	}
 
 	@Override
-	public List<PracticePlan> readFrom(Class<List<PracticePlan>> type, Type genericType, Annotation[] annotation
+	public List<BaseEntity> readFrom(Class<List<BaseEntity>> type, Type genericType, Annotation[] annotation
 					,MediaType mediaType, MultivaluedMap<String, String> httpHeaders
 					,InputStream inputStream) throws IOException, WebApplicationException {
 		ObjectMapper mapper = new ObjectMapper();
