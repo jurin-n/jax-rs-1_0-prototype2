@@ -14,6 +14,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 //import org.codehaus.jackson.map.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,6 +42,7 @@ public class JsonListMarshaller implements MessageBodyWriter<List<BaseEntity>> {
 					, MultivaluedMap<String, Object> httpHeaders
 					, OutputStream outputStream) throws IOException, WebApplicationException {
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		mapper.writeValue(outputStream, target);
 	}
 }
