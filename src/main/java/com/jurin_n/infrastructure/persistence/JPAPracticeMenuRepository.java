@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.jurin_n.domain.model.practice.PracticeMember;
 import com.jurin_n.domain.model.practice.PracticeMenu;
 import com.jurin_n.domain.model.practice.PracticeMenuId;
 import com.jurin_n.domain.model.practice.PracticeMenuRepository;
@@ -42,4 +43,8 @@ public class JPAPracticeMenuRepository implements PracticeMenuRepository {
 				);
 	}
 
+	@Override
+	public PracticeMenu getMenuById(PracticeMenuId id) {
+		return em.find(PracticeMenu.class,id);
+	}
 }

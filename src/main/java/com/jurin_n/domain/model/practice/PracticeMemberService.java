@@ -17,6 +17,6 @@ public class PracticeMemberService {
 		
 		repo.add(menu);
 		
-		return menu.getMemberId();
+		return menu.getPracticeMemberId();
 	}
 }

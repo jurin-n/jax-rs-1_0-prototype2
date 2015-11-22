@@ -19,7 +19,7 @@ import com.jurin_n.domain.model.BaseEntity;
 })
 public class PracticeMember extends BaseEntity {
 	@EmbeddedId
-	private PracticeMemberId memberId;
+	private PracticeMemberId practiceMemberId;
 	private String name;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
@@ -32,7 +32,7 @@ public class PracticeMember extends BaseEntity {
 	
 	public PracticeMember(PracticeMemberId aMemberId,String aName){
 		Date date = new Date();
-		this.memberId = aMemberId;
+		this.practiceMemberId = aMemberId;
 		this.name = aName;
 		this.createDate = date;
 		this.updateDate = date;
@@ -46,11 +46,11 @@ public class PracticeMember extends BaseEntity {
 		this.name = name;
 	}
 
-	public PracticeMemberId getMemberId() {
-		return memberId;
+	public PracticeMemberId getPracticeMemberId() {
+		return practiceMemberId;
 	}
 
 	public void setMemberId(PracticeMemberId aMemberId) {
-		this.memberId = aMemberId;
+		this.practiceMemberId = aMemberId;
 	}
 }

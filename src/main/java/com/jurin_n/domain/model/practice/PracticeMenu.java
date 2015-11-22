@@ -37,4 +37,8 @@ public class PracticeMenu {
 	public PracticeMenuId getPracticeMenuId() {
 		return practiceMenuId;
 	}
+
+	public String getMenu() {
+		return menu;
+	}
 }
