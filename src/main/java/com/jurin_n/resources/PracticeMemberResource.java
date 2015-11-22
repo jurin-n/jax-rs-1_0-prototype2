@@ -38,12 +38,12 @@ public class PracticeMemberResource {
 	  @POST
 	  public Response addPracticeMember(PracticeMember aMember){
 		  //サービス
-		  PracticeMember member = ts.addPracticeMember(aMember);
+		  ts.addPracticeMember(aMember);
 		  
 		  //レスポンス
 		  return Response
-				  .status(Response.Status.OK)
-				  .entity(member)
+				  .status(Response.Status.CREATED)
+				  .entity(aMember.getPracticeMemberId())
 				  .build();
 	  }
 }

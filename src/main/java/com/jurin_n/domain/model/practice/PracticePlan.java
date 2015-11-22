@@ -111,8 +111,7 @@ public class PracticePlan extends BaseEntity {
 		this.practiceMember = aPracticeMember;
 	}
 
-	public void setPracticePlanId(PracticePlanId nextIdentity) {
-		// TODO Auto-generated method stub
-		
+	public void setPracticePlanId(PracticePlanId aPracticePlanId) {
+		this.practicePlanId = aPracticePlanId;	
 	}
 }

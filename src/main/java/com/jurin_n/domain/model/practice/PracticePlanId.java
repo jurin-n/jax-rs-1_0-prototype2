@@ -2,8 +2,10 @@ package com.jurin_n.domain.model.practice;
 
 import javax.persistence.Embeddable;
 
+import com.jurin_n.domain.model.BaseEntity;
+
 @Embeddable
-public class PracticePlanId {
+public class PracticePlanId extends BaseEntity {
 	
 	private String id;
 	

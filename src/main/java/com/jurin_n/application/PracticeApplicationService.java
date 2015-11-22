@@ -42,26 +42,16 @@ public class PracticeApplicationService {
 		return planRepo.getPracticePlanById(id);
 	}
 
-	public PracticePlan addPracticePlan(PracticePlan aPlan) {		
-		PracticePlan plan = new PracticePlan(
-				 planRepo.nextIdentity()
-				,aPlan.getPracticeMenuId()
-				,aPlan.getPracticeMemberId()
-				,aPlan.getStartDate()
-				,aPlan.getEndDate()
-				);
-		planRepo.add(plan);
-		return plan;
+	public void addPracticePlan(PracticePlan aPlan) {		
+		aPlan.setPracticePlanId(planRepo.nextIdentity());
+		planRepo.add(aPlan);
 	}	
 	//
 	// PracticeMember
 	//
-	public PracticeMember addPracticeMember(PracticeMember aMember) {
-		if(aMember.getPracticeMemberId() == null){
-			aMember.setMemberId(memberRepo.nextIdentity());
-		}
+	public void addPracticeMember(PracticeMember aMember) {
+		aMember.setMemberId(memberRepo.nextIdentity());
 		memberRepo.add(aMember);
-		return memberRepo.getMemberById(aMember.getPracticeMemberId());
 	}
 
 	public List<PracticeMember> getPracticeMemberList() {

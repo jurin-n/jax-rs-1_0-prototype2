@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import com.jurin_n.application.PracticeApplicationService;
 import com.jurin_n.domain.model.practice.PracticePlan;
 
-@Path("/practice")
+@Path("/practice/plan")
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -25,7 +25,6 @@ public class PracticePlanResource {
 	  PracticeApplicationService ts;
 	  
 	  @GET
-	  @Path("/plan")
 	  public Response getPracticePlanList(){
 		  //サービス
 		  List<PracticePlan> list = ts.getPracticePlanList();
@@ -38,7 +37,7 @@ public class PracticePlanResource {
 	  }
 	  
 	  @GET
-	  @Path("/plan/{id}")
+	  @Path("/{id}")
 	  public Response getPracticePlan(@PathParam("id") String id){
 		  //サービス
 		  PracticePlan plan = ts.getPracticePlan(id);
@@ -51,15 +50,14 @@ public class PracticePlanResource {
 	  }
 	  
 	  @POST
-	  @Path("/plan")
 	  public Response addPracticePlan(PracticePlan aPlan){
 		  //サービス
-		  PracticePlan plan = ts.addPracticePlan(aPlan);
+		  ts.addPracticePlan(aPlan);
 		  
 		  //レスポンス
 		  return Response
-				  .status(Response.Status.OK)
-				  .entity(plan)
+				  .status(Response.Status.CREATED)
+				  .entity(aPlan.getPracticePlanId())
 				  .build(); 
 	  }
 }
