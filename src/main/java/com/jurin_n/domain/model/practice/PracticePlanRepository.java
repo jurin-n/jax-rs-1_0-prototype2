@@ -7,4 +7,6 @@ public interface PracticePlanRepository {
 	public void remove(PracticePlan aPracticePlan);
 	public List<PracticePlan> getAll();
 	public PracticePlanId nextIdentity();
+	public PracticePlan getPracticePlanById(String id);
+	public PracticePlan getPracticePlanById(PracticePlanId practicePlanId);
 }

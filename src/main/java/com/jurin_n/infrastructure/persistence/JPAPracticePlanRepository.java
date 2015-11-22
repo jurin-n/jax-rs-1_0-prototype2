@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import com.jurin_n.domain.model.practice.PracticeMenu;
 import com.jurin_n.domain.model.practice.PracticePlan;
 import com.jurin_n.domain.model.practice.PracticePlanId;
 import com.jurin_n.domain.model.practice.PracticePlanRepository;
@@ -50,5 +51,15 @@ public class JPAPracticePlanRepository implements PracticePlanRepository {
 		TypedQuery<PracticePlan> query
 		    = em.createNamedQuery("PracticePlan.FIND_ALL",PracticePlan.class);
 		return query.getResultList();
+	}
+
+	@Override
+	public PracticePlan getPracticePlanById(String id) {
+		return em.find(PracticePlan.class,new PracticePlanId(id));
+	}
+
+	@Override
+	public PracticePlan getPracticePlanById(PracticePlanId practicePlanId) {
+		return em.find(PracticePlan.class,practicePlanId);
 	}
 }

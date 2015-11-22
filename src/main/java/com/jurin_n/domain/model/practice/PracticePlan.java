@@ -12,22 +12,30 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jurin_n.domain.model.BaseEntity;
 
 @Entity
 @Table(name="t_PracticePlan")
 @NamedQueries({
 	@NamedQuery(name = "PracticePlan.FIND_ALL", query = "select p from PracticePlan p")
 })
-public class PracticePlan {
+public class PracticePlan extends BaseEntity {
 
 	@EmbeddedId
 	private PracticePlanId practicePlanId;
-	@Embedded
-	@AttributeOverride(name="id", column=@Column(name = "menuId"))
+	@Embedded @AttributeOverride(name="id", column=@Column(name = "menuId"))
+	//@JsonIgnore
 	private PracticeMenuId practiceMenuId;
-	@Embedded
-	@AttributeOverride(name="id", column=@Column(name = "memberId"))
-	private PracticeMemberId memberId;
+	@Transient
+	private PracticeMenu practiceMenu;
+	@Embedded @AttributeOverride(name="id", column=@Column(name = "memberId"))
+	//@JsonIgnore
+	private PracticeMemberId practiceMemberId;
+	@Transient
+	private PracticeMember practiceMember;
 	PracticeStatus status;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
@@ -52,7 +60,7 @@ public class PracticePlan {
 		Date date = new Date();
 		this.practicePlanId = aPracticePlanId;
 		this.practiceMenuId = aPracticeMenuId;
-		this.memberId = aMemberId;
+		this.practiceMemberId = aMemberId;
 		this.status = PracticeStatus.OPEN;
 		this.startDate = aStartDate;
 		this.endDate = aEndDate;
@@ -63,15 +71,18 @@ public class PracticePlan {
 	public PracticePlanId getPracticePlanId() {
 		return practicePlanId;
 	}
-
 	public PracticeMenuId getPracticeMenuId() {
 		return practiceMenuId;
 	}
-
-	public PracticeMemberId getMemberId() {
-		return memberId;
+	public PracticeMenu getPracticeMenu() {
+		return practiceMenu;
 	}
-
+	public PracticeMemberId getPracticeMemberId() {
+		return practiceMemberId;
+	}
+	public PracticeMember getPracticeMember() {
+		return practiceMember;
+	}
 	public PracticeStatus getStatus() {
 		return status;
 	}
@@ -90,5 +101,18 @@ public class PracticePlan {
 
 	public Date getUpdateDate() {
 		return updateDate;
+	}
+	
+	public void setPracticeMenu(PracticeMenu aPracticeMenu) {
+		this.practiceMenu = aPracticeMenu;
+	}
+
+	public void setPracticeMember(PracticeMember aPracticeMember) {
+		this.practiceMember = aPracticeMember;
+	}
+
+	public void setPracticePlanId(PracticePlanId nextIdentity) {
+		// TODO Auto-generated method stub
+		
 	}
 }
