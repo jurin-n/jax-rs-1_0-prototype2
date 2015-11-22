@@ -30,17 +30,10 @@ public class PracticeApplicationService {
 		for(PracticePlan plan : list){
 			
 			plan.setPracticeMember(
-						//memberRepo.getMemberById(plan.getPracticeMemberId())
-						memberRepo.getMemberById(
-								new PracticeMemberId("C625F609-740D-4E57-B564-1691FF007C4F")
-								)
-						
+						memberRepo.getMemberById(plan.getPracticeMemberId())
 					);
 			plan.setPracticeMenu(
-						//menuRepo.getMenuById(plan.getPracticeMenuId())
-						menuRepo.getMenuById(
-								new PracticeMenuId("19545564-75B9-44BD-BD8D-AA46FD625D52")
-								)
+						menuRepo.getMenuById(plan.getPracticeMenuId())
 					);
 		}
 		return list;
