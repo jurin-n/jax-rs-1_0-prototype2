@@ -14,11 +14,13 @@
 		<version>3.1.1</version>
 		<scope>provided</scope>
 	</dependency>
+<!-- derby使う場合は、postgresqlはコメントアウト
 	<dependency>
 		<groupId>org.postgresql</groupId>
 		<artifactId>postgresql</artifactId>
 		<version>9.4-1203-jdbc42</version>
 	</dependency>
+ -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

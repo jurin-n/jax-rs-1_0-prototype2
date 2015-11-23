@@ -18,7 +18,7 @@ import com.jurin_n.infrastructure.persistence.JPAPracticePlanRepository;
 
 public class PracticePlanServiceTest {
     private static EntityManager getEm() {
-    	
+    	/*
     	URI dbUri = null;
 		try {
 			dbUri = new URI(System.getenv("DATABASE_URL"));
@@ -40,6 +40,9 @@ public class PracticePlanServiceTest {
     			"jdbc:postgresql://" + host+ ":"+ port +"/" + databaseName);
     	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest",pro)
                           .createEntityManager();
+    	*/
+    	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest")
+                .createEntityManager();
     }
 	
     @Test

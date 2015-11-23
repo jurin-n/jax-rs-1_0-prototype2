@@ -54,6 +54,7 @@ public class EmbeddedGlassFish {
 	
 			  CommandRunner commandRunner = glassfish.getCommandRunner();
 	
+			  /*
 			  URI dbUri = new URI(System.getenv("DATABASE_URL"));
 	
 			  String username = dbUri.getUserInfo().split(":")[0];
@@ -70,6 +71,20 @@ public class EmbeddedGlassFish {
 		    		, "--restype", "javax.sql.DataSource"
 		    		, "--property", property
 		    		, "db1");
+		      */
+			  String username = "APP";
+			  String password = "APP";
+			  String property = "ServerName=localhost"
+				+":PortNumber=1527"
+				+":DatabaseName=db1"
+				+":User="+username
+				+":Password="+password
+				+":connectionAttributes=;create\\=true";
+			  commandRunner.run("create-jdbc-connection-pool"
+			    		, "--datasourceclassname", "org.apache.derby.jdbc.ClientDataSource"
+			    		, "--restype", "javax.sql.DataSource"
+			    		, "--property", property
+			    		, "db1");
 			  logger.info("set property=" + property);
 			  commandRunner.run("create-jdbc-resource"
 					  , "--connectionpoolid"
@@ -86,8 +101,10 @@ public class EmbeddedGlassFish {
 						  , "--force=true");
 			} catch (GlassFishException e) {
 				e.printStackTrace();
+			/*
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
+			*/
 			}
 	  	}
 	}
