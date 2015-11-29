@@ -3,16 +3,10 @@ package com.jurin_n.domain.model.practice;
 import javax.persistence.Embeddable;
 
 import com.jurin_n.domain.model.BaseEntity;
-import java.io.Serializable;
 
 @Embeddable
-public class PracticePlanId extends BaseEntity implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
+public class PracticePlanId extends BaseEntity {
+
 	private String id;
 	
 	public PracticePlanId(){
@@ -34,14 +28,33 @@ public class PracticePlanId extends BaseEntity implements Serializable {
 	
 	@Override
 	public boolean equals(Object anObject){
-		boolean equalObjects = false;
 		
-		if(anObject != null && this.getClass() == anObject.getClass()){
+		if(anObject == this) return true; //等値なので等価
+		if(anObject == null) return false;
+		
+		if(anObject instanceof PracticePlanId){
 			PracticePlanId typedObject = (PracticePlanId) anObject;
-			equalObjects = this.getId().equals(typedObject.getId());
+			if(this.getId().equals(typedObject.getId())){
+				//idが同じならば等価
+				return true;
+			}
 		}
-		
-		return equalObjects;
+		return false;
 	}
 	
+	@Override
+	public int hashCode(){
+		//適当な初期値
+		int result = 37;
+
+		//resultに各フィールドの影響を加える
+		result = result * 31 + this.getId().hashCode();
+
+		return result;
+	}
+	
+	@Override
+	public String toString(){
+		return this.getClass().getSimpleName() + "[id=" + this.getId() + "]";
+	}
 }
