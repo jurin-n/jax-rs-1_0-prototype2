@@ -33,11 +33,11 @@ public class PracticeMemberResource {
 		  List<PracticeMember> list = ts.getPracticeMemberList();
 		  
 		  //レスポンス
-		  Response response = this.practiceMemberResponse(list);
+		  Response response = this.practiceMemberListResponse(list);
 		  return response;
 	  }
 	  
-	  private Response practiceMemberResponse(List<PracticeMember> list){
+	  private Response practiceMemberListResponse(List<PracticeMember> list){
 		  List<BaseJsonMarshaller> response = new ArrayList<>();
 		  for(PracticeMember member : list){
 			  PracticeMemberRepresentation res
@@ -63,9 +63,20 @@ public class PracticeMemberResource {
 		  ts.addPracticeMember(aMember);
 		  
 		  //レスポンス
+		  Response response = this.practiceMemberResponse(aMember);
+		  return response;
+	  }
+	  
+	  private Response practiceMemberResponse(PracticeMember aMember){
+		  BaseJsonMarshaller res
+	  		= new PracticeMemberRepresentation(
+	  				 aMember.getPracticeMemberId().getId()
+	  				,aMember.getName()
+	  				);
+		  //レスポンス
 		  return Response
 				  .status(Response.Status.CREATED)
-				  .entity(aMember.getPracticeMemberId())
+				  .entity(res)
 				  .build();
 	  }
 }

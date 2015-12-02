@@ -16,8 +16,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 //import org.codehaus.jackson.map.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.jurin_n.domain.model.BaseEntity;
-
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
 public class JsonMarshaller implements MessageBodyWriter<BaseJsonMarshaller> {
@@ -31,7 +29,12 @@ public class JsonMarshaller implements MessageBodyWriter<BaseJsonMarshaller> {
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotation, MediaType mediaType) {
-		return type.isInstance(BaseJsonMarshaller.class);
+		for(int i=0 ;i < type.getInterfaces().length;i++){
+			if(type.getInterfaces()[i].equals(BaseJsonMarshaller.class)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
