@@ -1,10 +1,9 @@
-package com.jurin_n.providers;
+package com.jurin_n.jax_rs.providers;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
@@ -20,18 +19,19 @@ import com.jurin_n.domain.model.BaseEntity;
 
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
-public class JsonListUnmarshaller implements MessageBodyReader<List<BaseEntity>> {
+public class JsonUnmarshaller implements MessageBodyReader<BaseEntity> {
 
 	@Override
-	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotation, MediaType mediaType) {
-		return type==List.class;
+	public boolean isReadable(Class<?> type, Type genericType
+			, Annotation[] annotation, MediaType mediaType) {
+		return type.getSuperclass()==BaseEntity.class;
 	}
 
 	@Override
-	public List<BaseEntity> readFrom(Class<List<BaseEntity>> type, Type genericType, Annotation[] annotation
+	public BaseEntity readFrom(Class<BaseEntity> type, Type genericType, Annotation[] annotation
 					,MediaType mediaType, MultivaluedMap<String, String> httpHeaders
 					,InputStream inputStream) throws IOException, WebApplicationException {
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.readValue(inputStream, List.class);
+		return mapper.readValue(inputStream,type);
 	}
 }

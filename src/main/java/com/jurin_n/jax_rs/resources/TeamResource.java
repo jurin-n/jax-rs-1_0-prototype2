@@ -1,4 +1,4 @@
-package com.jurin_n.resources;
+package com.jurin_n.jax_rs.resources;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -14,11 +14,11 @@ import javax.ws.rs.core.Response;
 import com.jurin_n.application.TeamApplicationService;
 import com.jurin_n.domain.model.team.Team;
 
-@Path("/soccer-team")
+@Path("/team")
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class SoccerTeamResource {
+public class TeamResource {
 	  @Inject
 	  TeamApplicationService ts;
 
@@ -39,7 +39,7 @@ public class SoccerTeamResource {
 	  public Response createTeam(Team t){
 
 		  //サービス
-		  ts.createSoccerTeam(t);
+		  ts.createTeam(t);
 		  
 		  //レスポンス
 		  return Response

@@ -1,18 +1,14 @@
 package com.jurin_n.application;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.jurin_n.domain.model.practice.PracticeMember;
-import com.jurin_n.domain.model.practice.PracticeMemberId;
 import com.jurin_n.domain.model.practice.PracticeMemberRepository;
-import com.jurin_n.domain.model.practice.PracticeMenuId;
 import com.jurin_n.domain.model.practice.PracticeMenuRepository;
 import com.jurin_n.domain.model.practice.PracticePlan;
-import com.jurin_n.domain.model.practice.PracticePlanId;
 import com.jurin_n.domain.model.practice.PracticePlanRepository;
 import com.jurin_n.domain.model.practice.PracticePlanService;
 

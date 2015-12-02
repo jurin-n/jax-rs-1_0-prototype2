@@ -1,4 +1,4 @@
-package com.jurin_n.resources;
+package com.jurin_n.jax_rs.resources;
 
 import java.util.List;
 

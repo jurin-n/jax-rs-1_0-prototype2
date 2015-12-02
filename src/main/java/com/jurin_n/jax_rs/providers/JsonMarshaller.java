@@ -1,11 +1,9 @@
-package com.jurin_n.providers;
+package com.jurin_n.jax_rs.providers;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Vector;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -22,10 +20,10 @@ import com.jurin_n.domain.model.BaseEntity;
 
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
-public class JsonListMarshaller implements MessageBodyWriter<List<BaseEntity>> {
+public class JsonMarshaller implements MessageBodyWriter<BaseEntity> {
 
 	@Override
-	public long getSize(List<BaseEntity> arg0, Class<?> type
+	public long getSize(BaseEntity arg0, Class<?> type
 						, Type genericType, Annotation[] annotation
 						, MediaType mediaType) {
 		return -1;
@@ -33,11 +31,11 @@ public class JsonListMarshaller implements MessageBodyWriter<List<BaseEntity>> {
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotation, MediaType mediaType) {
-		return type==Vector.class;
+		return type.getSuperclass()==BaseEntity.class;
 	}
 
 	@Override
-	public void writeTo(List<BaseEntity> target, Class<?> type, Type genericType
+	public void writeTo(BaseEntity target, Class<?> type, Type genericType
 					, Annotation[] annotation, MediaType mediaType
 					, MultivaluedMap<String, Object> httpHeaders
 					, OutputStream outputStream) throws IOException, WebApplicationException {
