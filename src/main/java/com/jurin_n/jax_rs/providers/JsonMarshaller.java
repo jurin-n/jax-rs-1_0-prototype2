@@ -20,10 +20,10 @@ import com.jurin_n.domain.model.BaseEntity;
 
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
-public class JsonMarshaller implements MessageBodyWriter<BaseEntity> {
+public class JsonMarshaller implements MessageBodyWriter<BaseJsonMarshaller> {
 
 	@Override
-	public long getSize(BaseEntity arg0, Class<?> type
+	public long getSize(BaseJsonMarshaller arg0, Class<?> type
 						, Type genericType, Annotation[] annotation
 						, MediaType mediaType) {
 		return -1;
@@ -31,11 +31,11 @@ public class JsonMarshaller implements MessageBodyWriter<BaseEntity> {
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotation, MediaType mediaType) {
-		return type.getSuperclass()==BaseEntity.class;
+		return type.isInstance(BaseJsonMarshaller.class);
 	}
 
 	@Override
-	public void writeTo(BaseEntity target, Class<?> type, Type genericType
+	public void writeTo(BaseJsonMarshaller target, Class<?> type, Type genericType
 					, Annotation[] annotation, MediaType mediaType
 					, MultivaluedMap<String, Object> httpHeaders
 					, OutputStream outputStream) throws IOException, WebApplicationException {

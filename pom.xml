@@ -4,7 +4,7 @@
   <groupId>com.jurin_n</groupId>
   <artifactId>jax-rs-1_0-prototype2</artifactId>
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>jax-rs-1_0-prototype2 Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
