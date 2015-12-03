@@ -8,7 +8,9 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -16,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import com.jurin_n.application.PracticeApplicationService;
 import com.jurin_n.domain.model.practice.PracticeMember;
+import com.jurin_n.domain.model.practice.PracticeMemberId;
 import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
 import com.jurin_n.jax_rs.representation.PracticeMemberRepresentation;
 
@@ -58,16 +61,43 @@ public class PracticeMemberResource {
 	  }
 	  
 	  @POST
-	  public Response addPracticeMember(PracticeMember aMember){
+	  public Response addPracticeMember(PracticeMemberRepresentation aMember){
 		  //サービス
-		  ts.addPracticeMember(aMember);
+		  PracticeMember member = new PracticeMember(aMember);
+		  ts.addPracticeMember(member);
 		  
 		  //レスポンス
-		  Response response = this.practiceMemberResponse(aMember);
+		  Response response = this.practiceMemberResponse(
+				  						 member
+				  						,Response.Status.CREATED
+				  						);
 		  return response;
 	  }
 	  
-	  private Response practiceMemberResponse(PracticeMember aMember){
+	  @PUT
+	  @Path("{id}")
+	  public Response updatePracticeMember(
+			   @PathParam("id") String id
+			  ,PracticeMemberRepresentation aMember){
+		  //サービス
+		  PracticeMember member = new PracticeMember(
+				   new PracticeMemberId(id)
+				  ,aMember.getName()
+				  );
+		  ts.updatePracticeMember(member);
+		  
+		  //レスポンス
+		  Response response = this.practiceMemberResponse(
+				  						 member
+				  						,Response.Status.OK
+				  						);
+		  return response;
+	  }
+	  
+	  private Response practiceMemberResponse(
+			   PracticeMember aMember
+			  ,Response.Status status
+			  ){
 		  BaseJsonMarshaller res
 	  		= new PracticeMemberRepresentation(
 	  				 aMember.getPracticeMemberId().getId()
@@ -75,7 +105,7 @@ public class PracticeMemberResource {
 	  				);
 		  //レスポンス
 		  return Response
-				  .status(Response.Status.CREATED)
+				  .status(status)
 				  .entity(res)
 				  .build();
 	  }

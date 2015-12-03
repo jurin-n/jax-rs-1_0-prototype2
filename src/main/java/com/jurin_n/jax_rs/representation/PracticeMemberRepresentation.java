@@ -6,6 +6,10 @@ public class PracticeMemberRepresentation implements BaseJsonMarshaller {
 	private String id;
 	private String name;
 	
+	public PracticeMemberRepresentation(){
+		super();
+	}
+	
 	public PracticeMemberRepresentation(String id, String name){
 		this.id = id;
 		this.name = name;

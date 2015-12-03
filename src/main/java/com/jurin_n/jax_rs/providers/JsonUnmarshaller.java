@@ -15,20 +15,23 @@ import javax.ws.rs.ext.Provider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.codehaus.jackson.map.ObjectMapper;
 
-import com.jurin_n.domain.model.BaseEntity;
-
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
-public class JsonUnmarshaller implements MessageBodyReader<BaseEntity> {
+public class JsonUnmarshaller implements MessageBodyReader<BaseJsonMarshaller> {
 
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType
 			, Annotation[] annotation, MediaType mediaType) {
-		return type.getSuperclass()==BaseEntity.class;
+		for(int i=0 ;i < type.getInterfaces().length;i++){
+			if(type.getInterfaces()[i].equals(BaseJsonMarshaller.class)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
-	public BaseEntity readFrom(Class<BaseEntity> type, Type genericType, Annotation[] annotation
+	public BaseJsonMarshaller readFrom(Class<BaseJsonMarshaller> type, Type genericType, Annotation[] annotation
 					,MediaType mediaType, MultivaluedMap<String, String> httpHeaders
 					,InputStream inputStream) throws IOException, WebApplicationException {
 		ObjectMapper mapper = new ObjectMapper();

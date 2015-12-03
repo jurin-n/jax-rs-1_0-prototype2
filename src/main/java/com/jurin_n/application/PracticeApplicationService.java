@@ -54,4 +54,8 @@ public class PracticeApplicationService {
 		List<PracticeMember> list = memberRepo.getPracticeMemberAll();
 		return list;
 	}
+
+	public void updatePracticeMember(PracticeMember aMember) {
+		memberRepo.add(aMember);
+	}
 }

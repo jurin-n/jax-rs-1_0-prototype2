@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.jurin_n.domain.model.BaseEntity;
+import com.jurin_n.jax_rs.representation.PracticeMemberRepresentation;
 
 @Entity
 @Table(name="t_PracticeMember")
@@ -38,6 +39,16 @@ public class PracticeMember extends BaseEntity {
 		this.updateDate = date;
 	}
 	
+	public PracticeMember(PracticeMemberRepresentation aMember) {
+		Date date = new Date();
+		if(aMember.getId()!=null){
+			this.practiceMemberId = new PracticeMemberId(aMember.getId());
+		}
+		this.name = aMember.getName();
+		this.createDate = date;
+		this.updateDate = date;
+	}
+
 	public String getName() {
 		return name;
 	}

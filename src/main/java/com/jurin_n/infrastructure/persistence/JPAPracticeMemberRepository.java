@@ -10,7 +10,6 @@ import javax.persistence.TypedQuery;
 import com.jurin_n.domain.model.practice.PracticeMember;
 import com.jurin_n.domain.model.practice.PracticeMemberId;
 import com.jurin_n.domain.model.practice.PracticeMemberRepository;
-import com.jurin_n.domain.model.practice.PracticePlan;
 
 @Stateless
 public class JPAPracticeMemberRepository implements PracticeMemberRepository {
@@ -30,7 +29,12 @@ public class JPAPracticeMemberRepository implements PracticeMemberRepository {
 	
 	@Override
 	public void add(PracticeMember aMember) {
-		em.persist(aMember);
+		PracticeMember member = em.find(PracticeMember.class,aMember.getPracticeMemberId());
+		if(member==null){
+			em.persist(aMember);
+		}else{
+			em.merge(aMember);
+		}
 	}
 
 	@Override
