@@ -46,7 +46,6 @@ public class PracticeApplicationService {
 	// PracticeMember
 	//
 	public void addPracticeMember(PracticeMember aMember) {
-		aMember.setMemberId(memberRepo.nextIdentity());
 		memberRepo.add(aMember);
 	}
 

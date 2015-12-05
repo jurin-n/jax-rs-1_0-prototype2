@@ -16,7 +16,15 @@ public class JPAPracticeMemberRepository implements PracticeMemberRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void setEntityManager(EntityManager em){
+	public JPAPracticeMemberRepository(){
+		super();
+	}
+	
+	public JPAPracticeMemberRepository(EntityManager em) {
+		this.setEntityManager(em);
+	}
+
+	private void setEntityManager(EntityManager em){
 		if(this.em != null){
 			Class<?> c = this.getClass();
 			throw new IllegalStateException(
@@ -29,18 +37,22 @@ public class JPAPracticeMemberRepository implements PracticeMemberRepository {
 	
 	@Override
 	public void add(PracticeMember aMember) {
-		PracticeMember member = em.find(PracticeMember.class,aMember.getPracticeMemberId());
-		if(member==null){
-			em.persist(aMember);
-		}else{
-			em.merge(aMember);
-		}
+		aMember.setMemberId(this.nextIdentity());
+		em.persist(aMember);
 	}
 
 	@Override
+	public void update(PracticeMember aMember) {
+		PracticeMember f = em.find(PracticeMember.class, aMember.getPracticeMemberId());
+		if(f==null){
+			throw new IllegalStateException("更新対象が存在しません。");
+		}
+		em.merge(aMember);
+	}
+	
+	@Override
 	public void remove(PracticeMember aMember) {
-		// TODO Auto-generated method stub
-		
+		em.remove(aMember);
 	}
 
 	@Override

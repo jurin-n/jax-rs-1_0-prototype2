@@ -10,6 +10,9 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.jurin_n.infrastructure.persistence.JPAPracticeMemberRepository;
@@ -44,19 +47,34 @@ public class PracticeMemberServiceTest {
                 .createEntityManager();
     }
     
+    private PracticeMemberRepository repo;
+    private EntityManager em;
+    
+    @Before
+    public void setUp(){
+    	em = this.getEm();
+    	repo = new JPAPracticeMemberRepository(em);
+    }
+    
+    @After
+    public void tearDown(){
+    	em.close();
+    	repo=null;
+    }
+    
     @Test
-	public void test練習メンバーを作成できる() {
-		EntityManager em = this.getEm();
-		
-		PracticeMemberService sut = new PracticeMemberService();
-		JPAPracticeMemberRepository repo = new JPAPracticeMemberRepository();
-		repo.setEntityManager(em);
+	public void test練習メンバーを作成できる() {			
+    	PracticeMemberService sut = new PracticeMemberService();
 		sut.repo = repo;
 		
-        em.getTransaction().begin();  
+		em.getTransaction().begin();  
+		PracticeMemberId memberId = sut.addMember("テスト　太郎");
+		em.getTransaction().commit();
 		
-        sut.addMember("テスト　太郎");
-		
+		//後処理
+		PracticeMember aMember = repo.getMemberById(memberId);
+		em.getTransaction().begin();
+		repo.remove(aMember);
 		em.getTransaction().commit();
 	}
 
