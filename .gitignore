@@ -9,3 +9,6 @@
 /target/
 .checkstyle
 
+# derby
+db1
+derby.log
