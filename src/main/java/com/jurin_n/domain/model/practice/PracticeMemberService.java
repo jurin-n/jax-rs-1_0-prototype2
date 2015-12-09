@@ -19,4 +19,9 @@ public class PracticeMemberService {
 		
 		return menu.getPracticeMemberId();
 	}
+	
+	public PracticeMemberId updateMember(PracticeMember aMenu){		
+		repo.update(aMenu);
+		return aMenu.getPracticeMemberId();
+	}
 }

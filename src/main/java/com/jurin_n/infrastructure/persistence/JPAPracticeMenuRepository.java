@@ -4,7 +4,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.jurin_n.domain.model.practice.PracticeMember;
 import com.jurin_n.domain.model.practice.PracticeMenu;
 import com.jurin_n.domain.model.practice.PracticeMenuId;
 import com.jurin_n.domain.model.practice.PracticeMenuRepository;
@@ -13,6 +12,10 @@ import com.jurin_n.domain.model.practice.PracticeMenuRepository;
 public class JPAPracticeMenuRepository implements PracticeMenuRepository {
 	@PersistenceContext
 	private EntityManager em;
+
+	public JPAPracticeMenuRepository(EntityManager em) {
+		this.setEntityManager(em);
+	}
 
 	public void setEntityManager(EntityManager em) {
 		if(this.em != null){

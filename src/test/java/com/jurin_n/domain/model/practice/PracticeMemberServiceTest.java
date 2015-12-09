@@ -2,80 +2,85 @@ package com.jurin_n.domain.model.practice;
 
 import static org.junit.Assert.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.jurin_n.infrastructure.persistence.JPAPracticeMemberRepository;
 
-public class PracticeMemberServiceTest {
-    private static EntityManager getEm() {
- /*   	
-    	URI dbUri = null;
-		try {
-			dbUri = new URI(System.getenv("DATABASE_URL"));
-		} catch (URISyntaxException e) {
-			fail();
-		}	
-		String username = dbUri.getUserInfo().split(":")[0];
-		String password = dbUri.getUserInfo().split(":")[1];
-		
-		String host = dbUri.getHost();
-		int port = dbUri.getPort();
-		String databaseName = dbUri.getPath().substring(1);
-		
-    	Map<String,String> pro = new HashMap<>();
-    	
-    	pro.put("javax.persistence.jdbc.user", username);
-    	pro.put("javax.persistence.jdbc.password", password);
-    	pro.put("javax.persistence.jdbc.url",
-    			"jdbc:postgresql://" + host+ ":"+ port +"/" + databaseName);
+import static org.hamcrest.core.Is.is;
 
-    	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest",pro)
-                          .createEntityManager();
-                          */
-    	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest")
-                .createEntityManager();
-    }
-    
+public class PracticeMemberServiceTest extends CommonServiceTest {
+
+	//テスト対象クラス
+    private PracticeMemberService sut;
     private PracticeMemberRepository repo;
-    private EntityManager em;
-    
+
     @Before
     public void setUp(){
-    	em = this.getEm();
+    	super.setUp();
+    	
+    	//テスト対象セットアップ
+    	sut = new PracticeMemberService();
     	repo = new JPAPracticeMemberRepository(em);
+		sut.repo = repo;
     }
     
     @After
     public void tearDown(){
-    	em.close();
+    	super.tearDown();
+    	
     	repo=null;
+    	sut=null;
     }
     
     @Test
-	public void test練習メンバーを作成できる() {			
-    	PracticeMemberService sut = new PracticeMemberService();
-		sut.repo = repo;
+	public void test_addMember_練習メンバーを作成できる() {	
 		
-		em.getTransaction().begin();  
-		PracticeMemberId memberId = sut.addMember("テスト　太郎");
+		//テスト実行：メンバー追加
+    	em.getTransaction().begin();
+		String addName = "テスト　太郎";
+		PracticeMemberId memberId = sut.addMember(addName);
 		em.getTransaction().commit();
 		
-		//後処理
+		//アサーション
 		PracticeMember aMember = repo.getMemberById(memberId);
+		assertThat(aMember.getName(), is(addName));
+			
+		//後処理
 		em.getTransaction().begin();
 		repo.remove(aMember);
 		em.getTransaction().commit();
 	}
 
+    @Test
+	public void test_updateMember_練習メンバーを更新できる() {	
+		
+		//セットアップ
+    	em.getTransaction().begin();
+		String addName = "テスト　太郎";
+		PracticeMemberId memberId = sut.addMember(addName);
+		em.getTransaction().commit();
+
+		//アサーション
+		PracticeMember aMember = repo.getMemberById(memberId);
+		assertThat(aMember.getName(), is(addName));
+		
+		//テスト実行：メンバー更新
+	   	em.getTransaction().begin();
+		String updateName = "テスト　次郎";
+		aMember.setName(updateName);
+		PracticeMemberId memberId2 = sut.updateMember(aMember);
+	   	em.getTransaction().commit();
+
+		//アサーション
+		PracticeMember aMember2 = repo.getMemberById(memberId2);
+		assertThat(aMember2.getName(), is(updateName));
+			
+		//後処理：ここで削除しないと他のテストに影響及ぼすため。
+		em.getTransaction().begin();
+		repo.remove(aMember);
+		repo.remove(aMember2);
+		em.getTransaction().commit();
+	}
 }
