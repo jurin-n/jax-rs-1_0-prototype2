@@ -3,6 +3,8 @@ JAX-RS1.1試してます。JPAも使います。
 
 作ったRestサービスの仕様とか使った技術などメモる予定。
 
+##実行方法(初期化,コンパイル,テスト,アーカイブ,glassfish起動,デプロイ)
+mvn clean install exec:java
 
 ##参考文献
 ###JavaEE6仕様

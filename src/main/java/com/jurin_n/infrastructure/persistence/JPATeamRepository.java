@@ -2,25 +2,23 @@ package com.jurin_n.infrastructure.persistence;
 
 import java.util.Collection;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.jurin_n.domain.model.team.TeamRepository;
 import com.jurin_n.domain.model.team.Team;
 
+@Stateless
 public class JPATeamRepository implements TeamRepository {
-	
+	@PersistenceContext
 	private EntityManager em;
 	
 	public JPATeamRepository() {
 		super();
 	}
-	
-	@Override
-	public void setEntityManager(EntityManager em){
-		this.em = em;
-	}
-	
+		
 	@Override
 	public void add(Team aTeam) {
 		em.persist(aTeam);

@@ -4,13 +4,15 @@ import javax.persistence.*;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.jurin_n.domain.model.BaseEntity;
+
 /**
  * Entity implementation class for Entity: Member
  *
  */
 @Entity
 @Table(name="t_member")
-public class Member {
+public class Member extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
