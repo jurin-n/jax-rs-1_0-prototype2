@@ -13,6 +13,10 @@ public class JPAPracticeMenuRepository implements PracticeMenuRepository {
 	@PersistenceContext
 	private EntityManager em;
 
+	public JPAPracticeMenuRepository(){
+		super();
+	}
+	
 	public JPAPracticeMenuRepository(EntityManager em) {
 		this.setEntityManager(em);
 	}

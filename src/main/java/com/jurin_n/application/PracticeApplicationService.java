@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.jurin_n.domain.model.practice.PracticeMember;
+import com.jurin_n.domain.model.practice.PracticeMemberId;
 import com.jurin_n.domain.model.practice.PracticeMemberRepository;
 import com.jurin_n.domain.model.practice.PracticeMenuRepository;
 import com.jurin_n.domain.model.practice.PracticePlan;
@@ -56,5 +57,15 @@ public class PracticeApplicationService {
 
 	public void updatePracticeMember(PracticeMember aMember) {
 		memberRepo.add(aMember);
+	}
+
+	public void deletePracticeMember(PracticeMemberId practiceMemberId) {
+		PracticeMember aMember = memberRepo.getMemberById(practiceMemberId);
+		memberRepo.remove(aMember);
+	}
+	
+	public PracticeMember getPracticeMember(PracticeMemberId practiceMemberId) {
+		PracticeMember aMember = memberRepo.getMemberById(practiceMemberId);
+		return aMember;
 	}
 }
