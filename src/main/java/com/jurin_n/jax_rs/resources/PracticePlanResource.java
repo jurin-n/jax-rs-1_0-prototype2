@@ -18,12 +18,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.jurin_n.application.PracticeApplicationService;
-import com.jurin_n.domain.model.practice.member.PracticeMemberId;
 import com.jurin_n.domain.model.practice.plan.PracticePlan;
 import com.jurin_n.domain.model.practice.plan.PracticePlanId;
 import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
-import com.jurin_n.jax_rs.representation.PracticeMemberRepresentation;
-import com.jurin_n.jax_rs.representation.PracticeMenuRepresentation;
 import com.jurin_n.jax_rs.representation.PracticePlanRepresentation;
 
 @Path("/practice/plan")
@@ -53,14 +50,7 @@ public class PracticePlanResource {
 		List<BaseJsonMarshaller> response = new ArrayList<>();
 		for(PracticePlan plan : list){
 			PracticePlanRepresentation res
-				= new PracticePlanRepresentation(
-						 plan.getPracticePlanId().getId()
-						,new PracticeMenuRepresentation(plan.getPracticeMenu())
-						,new PracticeMemberRepresentation(plan.getPracticeMember())
-						,plan.getStatus()
-						,plan.getStartDate()
-						,plan.getEndDate()
-						);
+				= new PracticePlanRepresentation(plan);
 			response.add(res);
 		}
 		GenericEntity<List<BaseJsonMarshaller>> entity
@@ -80,26 +70,10 @@ public class PracticePlanResource {
 		PracticePlan plan = ts.getPracticePlan(new PracticePlanId(id));
 		
 		//レスポンス
-		Response response = this.practicePlanResponse(plan);
+		Response response = this.practicePlanResponse(
+											 plan
+											,Response.Status.OK);
 		return response;
-	}
-	
-	private Response practicePlanResponse(PracticePlan aPlan) {
-		PracticePlanRepresentation res
-			= new PracticePlanRepresentation(
-					 aPlan.getPracticePlanId().getId()
-					,new PracticeMenuRepresentation(aPlan.getPracticeMenu())
-					,new PracticeMemberRepresentation(aPlan.getPracticeMember())
-					,aPlan.getStatus()
-					,aPlan.getStartDate()
-					,aPlan.getEndDate()
-					);
-
-		//レスポンス
-		return Response
-			.status(Response.Status.OK)
-			.entity(res)
-			.build(); 
 	}
 
 	@POST
@@ -120,14 +94,8 @@ public class PracticePlanResource {
 
 	private Response practicePlanResponse(PracticePlan aPlan, Status status) {
 		BaseJsonMarshaller res
-			= new PracticePlanRepresentation(
-					 aPlan.getPracticePlanId().getId()
-					,new PracticeMenuRepresentation(aPlan.getPracticeMenu())
-					,new PracticeMemberRepresentation(aPlan.getPracticeMember())
-					,aPlan.getStatus()
-					,aPlan.getStartDate()
-					,aPlan.getEndDate()
-					);
+			= new PracticePlanRepresentation(aPlan);
+		
 		//レスポンス
 		return Response
 				.status(status)

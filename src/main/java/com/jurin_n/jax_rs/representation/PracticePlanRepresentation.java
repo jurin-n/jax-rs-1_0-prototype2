@@ -3,6 +3,7 @@ package com.jurin_n.jax_rs.representation;
 import java.util.Date;
 
 import com.jurin_n.domain.model.practice.PracticeStatus;
+import com.jurin_n.domain.model.practice.plan.PracticePlan;
 import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
 
 public class PracticePlanRepresentation implements BaseJsonMarshaller {
@@ -17,28 +18,15 @@ public class PracticePlanRepresentation implements BaseJsonMarshaller {
 		super();
 	}
 	
-	public PracticePlanRepresentation(
-			  String id
-			, PracticeMenuRepresentation practiceMenu
-			, PracticeMemberRepresentation practiceMember){
-		this.id = id;
-		this.practiceMenu = practiceMenu;
-		this.practiceMember = practiceMember;
-	}
-	
-	public PracticePlanRepresentation(
-			  String id
-			, PracticeMenuRepresentation practiceMenu
-			, PracticeMemberRepresentation practiceMember
-			, PracticeStatus status
-			, Date startDate
-			, Date endDate) {
-		this.id = id;
-		this.practiceMenu = practiceMenu;
-		this.practiceMember = practiceMember;
-		this.status = status;
-		this.startDate = startDate;
-		this.endDate = endDate;
+	public PracticePlanRepresentation(PracticePlan aPlan){
+		this.id = aPlan.getPracticePlanId().getId();
+		this.practiceMenu
+				= new PracticeMenuRepresentation(aPlan.getPracticeMenu());
+		this.practiceMember
+				= new PracticeMemberRepresentation(aPlan.getPracticeMember());
+		this.status = aPlan.getStatus();
+		this.startDate = aPlan.getStartDate();
+		this.endDate = aPlan.getEndDate();	
 	}
 
 	public String getId() {
