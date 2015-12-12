@@ -11,6 +11,7 @@ import com.jurin_n.domain.model.practice.member.PracticeMember;
 import com.jurin_n.domain.model.practice.menu.PracticeMenu;
 import com.jurin_n.domain.model.practice.menu.PracticeMenuId;
 import com.jurin_n.domain.model.practice.menu.PracticeMenuRepository;
+import com.jurin_n.domain.model.practice.record.PracticeRecord;
 
 @Stateless
 public class JPAPracticeMenuRepository implements PracticeMenuRepository {

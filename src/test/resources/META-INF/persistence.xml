@@ -6,6 +6,7 @@
 		<class>com.jurin_n.domain.model.practice.menu.PracticeMenu</class>
 		<class>com.jurin_n.domain.model.practice.plan.PracticePlan</class>
 		<class>com.jurin_n.domain.model.practice.member.PracticeMember</class>
+		<class>com.jurin_n.domain.model.practice.record.PracticeRecord</class>
 		<properties>
 			<!-- 実行時にテーブルの生成をメタデータ（エンティティ）から行う。 -->
 			<!-- <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> -->

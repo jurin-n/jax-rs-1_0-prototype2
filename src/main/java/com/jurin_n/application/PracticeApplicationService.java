@@ -18,6 +18,9 @@ import com.jurin_n.domain.model.practice.plan.PracticePlan;
 import com.jurin_n.domain.model.practice.plan.PracticePlanId;
 import com.jurin_n.domain.model.practice.plan.PracticePlanRepository;
 import com.jurin_n.domain.model.practice.plan.PracticePlanService;
+import com.jurin_n.domain.model.practice.record.PracticeRecord;
+import com.jurin_n.domain.model.practice.record.PracticeRecordId;
+import com.jurin_n.domain.model.practice.record.PracticeRecordRepository;
 
 @Stateless
 public class PracticeApplicationService {
@@ -25,6 +28,7 @@ public class PracticeApplicationService {
 	@Inject PracticePlanRepository planRepo;
 	@Inject PracticeMemberRepository memberRepo;
 	@Inject PracticeMenuRepository menuRepo;
+	@Inject PracticeRecordRepository recordRepo;
 	//
 	// PracticePlan
 	//
@@ -119,5 +123,21 @@ public class PracticeApplicationService {
 	public void deletePracticeMenu(PracticeMenuId practiceMenuId) {
 		PracticeMenu aMember = menuRepo.getMenuById(practiceMenuId);
 		menuRepo.remove(aMember);
+	}
+	
+	//
+	// PracticeRecord
+	//
+	public void addPracticeRecord(PracticeRecord aRecord) {
+		aRecord.setPracticeRecordId(recordRepo.nextIdentity());
+		recordRepo.add(aRecord);
+	}
+	public List<PracticeRecord> getPracticeRecordList() {
+		List<PracticeRecord> list = recordRepo.getAll();
+		return list;
+	}
+	public PracticeRecord getPracticeRecord(PracticeRecordId practicePlanId) {
+		PracticeRecord aRecord = recordRepo.getRecordById(practicePlanId);
+		return aRecord;
 	}
 }

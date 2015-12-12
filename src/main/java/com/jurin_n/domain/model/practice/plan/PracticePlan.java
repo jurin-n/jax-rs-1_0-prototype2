@@ -32,12 +32,10 @@ public class PracticePlan extends BaseEntity {
 	@EmbeddedId
 	private PracticePlanId practicePlanId;
 	@Embedded @AttributeOverride(name="id", column=@Column(name = "menuId"))
-	//@JsonIgnore
 	private PracticeMenuId practiceMenuId;
 	@Transient
 	private PracticeMenu practiceMenu;
 	@Embedded @AttributeOverride(name="id", column=@Column(name = "memberId"))
-	//@JsonIgnore
 	private PracticeMemberId practiceMemberId;
 	@Transient
 	private PracticeMember practiceMember;
