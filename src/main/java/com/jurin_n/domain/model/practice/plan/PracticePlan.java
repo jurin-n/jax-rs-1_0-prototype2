@@ -14,13 +14,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jurin_n.domain.model.BaseEntity;
 import com.jurin_n.domain.model.practice.PracticeStatus;
 import com.jurin_n.domain.model.practice.member.PracticeMember;
 import com.jurin_n.domain.model.practice.member.PracticeMemberId;
 import com.jurin_n.domain.model.practice.menu.PracticeMenu;
 import com.jurin_n.domain.model.practice.menu.PracticeMenuId;
+import com.jurin_n.jax_rs.representation.PracticePlanRepresentation;
 
 @Entity
 @Table(name="t_PracticePlan")
@@ -73,6 +73,18 @@ public class PracticePlan extends BaseEntity {
 		this.updateDate = date;
 	}
 
+	public PracticePlan(PracticePlanRepresentation aPlan) {
+		Date date = new Date();
+		if(aPlan.getId()!=null){
+			this.practicePlanId = new PracticePlanId(aPlan.getId());
+		}
+		this.practiceMenuId = new PracticeMenuId(aPlan.getPracticeMenu().getId());
+		this.practiceMemberId = new PracticeMemberId(aPlan.getPracticeMember().getId());
+		this.status = aPlan.getStatus();
+		this.createDate = date;
+		this.updateDate = date;
+	}
+
 	public PracticePlanId getPracticePlanId() {
 		return practicePlanId;
 	}
@@ -118,5 +130,17 @@ public class PracticePlan extends BaseEntity {
 
 	public void setPracticePlanId(PracticePlanId aPracticePlanId) {
 		this.practicePlanId = aPracticePlanId;	
+	}
+	
+	public void setStatus(PracticeStatus status){
+		this.status = status;
+	}
+	
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 }

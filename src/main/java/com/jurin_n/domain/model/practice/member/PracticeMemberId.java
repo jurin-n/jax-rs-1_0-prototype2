@@ -23,7 +23,7 @@ public class PracticeMemberId extends BaseEntity {
 	}
 	
 	public String getId() {
-		return this.id;
+		return id;
 	}
 	
 	@Override

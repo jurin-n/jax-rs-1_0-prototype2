@@ -17,6 +17,14 @@ public class JPAPracticePlanRepository implements PracticePlanRepository {
 	@PersistenceContext
 	private EntityManager em;
 
+	public JPAPracticePlanRepository(EntityManager em) {
+		setEntityManager(em);
+	}
+
+	public JPAPracticePlanRepository() {
+		super();
+	}
+
 	public void setEntityManager(EntityManager em){
 		if(this.em != null){
 			Class<?> c = this.getClass();
