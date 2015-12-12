@@ -1,8 +1,10 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.member;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.jurin_n.domain.model.practice.member.PracticeMemberId;
 
 public class PracticeMemberIdTest {
 

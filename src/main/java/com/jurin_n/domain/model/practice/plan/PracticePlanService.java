@@ -1,10 +1,13 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.plan;
 
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import com.jurin_n.domain.model.practice.member.PracticeMemberId;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuId;
 
 @Stateless
 public class PracticePlanService {

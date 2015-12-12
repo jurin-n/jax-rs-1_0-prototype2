@@ -1,4 +1,4 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.menu;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.jurin_n.domain.model.practice.CommonServiceTest;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuRepository;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuService;
 import com.jurin_n.infrastructure.persistence.JPAPracticeMenuRepository;
 
 public class PracticeMenuServiceTest extends CommonServiceTest {

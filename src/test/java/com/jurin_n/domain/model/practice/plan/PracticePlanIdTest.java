@@ -1,4 +1,4 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.plan;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,9 @@ import org.junit.experimental.theories.DataPoint;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
+
+import com.jurin_n.domain.model.practice.plan.PracticePlanId;
+
 import org.junit.experimental.runners.Enclosed;
 
 @RunWith(Enclosed.class)

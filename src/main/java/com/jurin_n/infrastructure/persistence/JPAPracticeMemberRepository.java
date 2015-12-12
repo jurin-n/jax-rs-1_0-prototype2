@@ -7,9 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import com.jurin_n.domain.model.practice.PracticeMember;
-import com.jurin_n.domain.model.practice.PracticeMemberId;
-import com.jurin_n.domain.model.practice.PracticeMemberRepository;
+import com.jurin_n.domain.model.practice.member.PracticeMember;
+import com.jurin_n.domain.model.practice.member.PracticeMemberId;
+import com.jurin_n.domain.model.practice.member.PracticeMemberRepository;
 
 @Stateless
 public class JPAPracticeMemberRepository implements PracticeMemberRepository {

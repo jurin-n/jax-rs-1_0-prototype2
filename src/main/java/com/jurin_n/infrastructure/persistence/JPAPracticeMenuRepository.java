@@ -4,9 +4,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.jurin_n.domain.model.practice.PracticeMenu;
-import com.jurin_n.domain.model.practice.PracticeMenuId;
-import com.jurin_n.domain.model.practice.PracticeMenuRepository;
+import com.jurin_n.domain.model.practice.menu.PracticeMenu;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuId;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuRepository;
 
 @Stateless
 public class JPAPracticeMenuRepository implements PracticeMenuRepository {

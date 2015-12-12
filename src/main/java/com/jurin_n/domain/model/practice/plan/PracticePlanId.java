@@ -1,19 +1,19 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.plan;
 
 import javax.persistence.Embeddable;
 
 import com.jurin_n.domain.model.BaseEntity;
 
 @Embeddable
-public class PracticeMenuId extends BaseEntity {
-	
+public class PracticePlanId extends BaseEntity {
+
 	private String id;
 	
-	public PracticeMenuId(){
+	public PracticePlanId(){
 		super();
 	}
 	
-	public PracticeMenuId(String anId){
+	public PracticePlanId(String anId){
 		super();
 		this.setId(anId);
 	}
@@ -32,8 +32,8 @@ public class PracticeMenuId extends BaseEntity {
 		if(anObject == this) return true; //等値なので等価
 		if(anObject == null) return false;
 		
-		if(anObject instanceof PracticeMenuId){
-			PracticeMenuId typedObject = (PracticeMenuId) anObject;
+		if(anObject instanceof PracticePlanId){
+			PracticePlanId typedObject = (PracticePlanId) anObject;
 			if(this.getId().equals(typedObject.getId())){
 				//idが同じならば等価
 				return true;

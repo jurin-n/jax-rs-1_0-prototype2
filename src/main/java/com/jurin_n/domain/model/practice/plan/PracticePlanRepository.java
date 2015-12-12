@@ -1,4 +1,4 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.plan;
 
 import java.util.List;
 

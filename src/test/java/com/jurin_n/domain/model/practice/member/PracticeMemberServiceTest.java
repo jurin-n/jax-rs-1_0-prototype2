@@ -1,4 +1,4 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.member;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.jurin_n.domain.model.practice.CommonServiceTest;
+import com.jurin_n.domain.model.practice.member.PracticeMember;
+import com.jurin_n.domain.model.practice.member.PracticeMemberId;
+import com.jurin_n.domain.model.practice.member.PracticeMemberRepository;
+import com.jurin_n.domain.model.practice.member.PracticeMemberService;
 import com.jurin_n.infrastructure.persistence.JPAPracticeMemberRepository;
 
 import static org.hamcrest.core.Is.is;

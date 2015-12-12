@@ -1,4 +1,4 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.plan;
 
 import static org.junit.Assert.*;
 
@@ -14,6 +14,9 @@ import javax.persistence.Persistence;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.jurin_n.domain.model.practice.member.PracticeMemberId;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuId;
+import com.jurin_n.domain.model.practice.plan.PracticePlanService;
 import com.jurin_n.infrastructure.persistence.JPAPracticePlanRepository;
 
 public class PracticePlanServiceTest {

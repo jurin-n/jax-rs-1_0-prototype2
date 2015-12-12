@@ -18,8 +18,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.jurin_n.application.PracticeApplicationService;
-import com.jurin_n.domain.model.practice.PracticeMember;
-import com.jurin_n.domain.model.practice.PracticeMemberId;
+import com.jurin_n.domain.model.practice.member.PracticeMember;
+import com.jurin_n.domain.model.practice.member.PracticeMemberId;
 import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
 import com.jurin_n.jax_rs.representation.PracticeMemberRepresentation;
 

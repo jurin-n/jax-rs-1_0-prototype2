@@ -1,4 +1,4 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.member;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

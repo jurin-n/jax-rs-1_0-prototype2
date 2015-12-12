@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.jurin_n.application.PracticeApplicationService;
-import com.jurin_n.domain.model.practice.PracticePlan;
+import com.jurin_n.domain.model.practice.plan.PracticePlan;
 
 @Path("/practice/plan")
 @RequestScoped

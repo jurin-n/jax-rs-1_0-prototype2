@@ -15,8 +15,8 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-import com.jurin_n.domain.model.practice.PracticeMember;
-import com.jurin_n.domain.model.practice.PracticeMemberRepository;
+import com.jurin_n.domain.model.practice.member.PracticeMember;
+import com.jurin_n.domain.model.practice.member.PracticeMemberRepository;
 import com.jurin_n.jax_rs.representation.PracticeMemberRepresentation;
 
 public class JPAPracticeMemberRepositoryTest {

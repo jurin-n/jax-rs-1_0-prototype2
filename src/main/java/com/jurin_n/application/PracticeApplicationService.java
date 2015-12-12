@@ -5,13 +5,13 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import com.jurin_n.domain.model.practice.PracticeMember;
-import com.jurin_n.domain.model.practice.PracticeMemberId;
-import com.jurin_n.domain.model.practice.PracticeMemberRepository;
-import com.jurin_n.domain.model.practice.PracticeMenuRepository;
-import com.jurin_n.domain.model.practice.PracticePlan;
-import com.jurin_n.domain.model.practice.PracticePlanRepository;
-import com.jurin_n.domain.model.practice.PracticePlanService;
+import com.jurin_n.domain.model.practice.member.PracticeMember;
+import com.jurin_n.domain.model.practice.member.PracticeMemberId;
+import com.jurin_n.domain.model.practice.member.PracticeMemberRepository;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuRepository;
+import com.jurin_n.domain.model.practice.plan.PracticePlan;
+import com.jurin_n.domain.model.practice.plan.PracticePlanRepository;
+import com.jurin_n.domain.model.practice.plan.PracticePlanService;
 
 @Stateless
 public class PracticeApplicationService {

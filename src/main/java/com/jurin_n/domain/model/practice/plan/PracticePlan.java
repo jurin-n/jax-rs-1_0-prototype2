@@ -1,4 +1,4 @@
-package com.jurin_n.domain.model.practice;
+package com.jurin_n.domain.model.practice.plan;
 
 import java.util.Date;
 
@@ -16,6 +16,11 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jurin_n.domain.model.BaseEntity;
+import com.jurin_n.domain.model.practice.PracticeStatus;
+import com.jurin_n.domain.model.practice.member.PracticeMember;
+import com.jurin_n.domain.model.practice.member.PracticeMemberId;
+import com.jurin_n.domain.model.practice.menu.PracticeMenu;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuId;
 
 @Entity
 @Table(name="t_PracticePlan")
