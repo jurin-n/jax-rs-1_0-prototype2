@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import com.jurin_n.domain.model.practice.member.PracticeMember;
 import com.jurin_n.domain.model.practice.member.PracticeMemberId;
 import com.jurin_n.domain.model.practice.member.PracticeMemberRepository;
+import com.jurin_n.domain.model.practice.menu.PracticeMenu;
+import com.jurin_n.domain.model.practice.menu.PracticeMenuId;
 import com.jurin_n.domain.model.practice.menu.PracticeMenuRepository;
 import com.jurin_n.domain.model.practice.plan.PracticePlan;
 import com.jurin_n.domain.model.practice.plan.PracticePlanRepository;
@@ -42,7 +44,8 @@ public class PracticeApplicationService {
 	public void addPracticePlan(PracticePlan aPlan) {		
 		aPlan.setPracticePlanId(planRepo.nextIdentity());
 		planRepo.add(aPlan);
-	}	
+	}
+	
 	//
 	// PracticeMember
 	//
@@ -67,5 +70,27 @@ public class PracticeApplicationService {
 	public PracticeMember getPracticeMember(PracticeMemberId practiceMemberId) {
 		PracticeMember aMember = memberRepo.getMemberById(practiceMemberId);
 		return aMember;
+	}
+	
+	//
+	// PracticeMenu
+	//
+	public List<PracticeMenu> getPracticeMenuList() {
+		List<PracticeMenu> list = menuRepo.getPracticeMenuAll();
+		return list;
+	}
+	public PracticeMenu getPracticeMenu(PracticeMenuId practiceMenuId) {
+		PracticeMenu aMember = menuRepo.getMenuById(practiceMenuId);
+		return aMember;
+	}
+	public void addPracticeMenu(PracticeMenu aMenu) {
+		menuRepo.add(aMenu);
+	}
+	public void updatePracticeMenu(PracticeMenu aMenu) {
+		menuRepo.update(aMenu);
+	}
+	public void deletePracticeMenu(PracticeMenuId practiceMenuId) {
+		PracticeMenu aMember = menuRepo.getMenuById(practiceMenuId);
+		menuRepo.remove(aMember);
 	}
 }
