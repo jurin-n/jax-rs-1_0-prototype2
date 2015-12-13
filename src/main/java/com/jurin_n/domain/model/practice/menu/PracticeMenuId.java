@@ -17,13 +17,9 @@ public class PracticeMenuId extends BaseEntity {
 	
 	public PracticeMenuId(String anId){
 		super();
-		this.setId(anId);
-	}
-
-	private void setId(String anId) {
 		this.id = anId;
 	}
-	
+
 	public String getId() {
 		return this.id;
 	}

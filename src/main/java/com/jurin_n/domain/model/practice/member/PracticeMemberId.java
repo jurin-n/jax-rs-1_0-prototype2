@@ -17,13 +17,9 @@ public class PracticeMemberId extends BaseEntity {
 	
 	public PracticeMemberId(String anId){
 		super();
-		this.setId(anId);
-	}
-	
-	private void setId(String anId) {
 		this.id = anId;
 	}
-	
+
 	public String getId() {
 		return id;
 	}

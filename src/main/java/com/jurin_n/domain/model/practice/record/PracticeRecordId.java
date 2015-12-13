@@ -17,13 +17,9 @@ public class PracticeRecordId extends BaseEntity {
 	
 	public PracticeRecordId(String anId){
 		super();
-		this.setId(anId);
-	}
-
-	private void setId(String anId) {
 		this.id = anId;
 	}
-	
+
 	public String getId() {
 		return this.id;
 	}
