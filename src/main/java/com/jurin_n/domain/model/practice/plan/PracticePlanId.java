@@ -2,10 +2,10 @@ package com.jurin_n.domain.model.practice.plan;
 
 import javax.persistence.Embeddable;
 
-import com.jurin_n.domain.model.BaseEntity;
+import com.jurin_n.domain.model.BaseIdEntity;
 
 @Embeddable
-public class PracticePlanId extends BaseEntity {
+public class PracticePlanId extends BaseIdEntity {
 
 	//このidフィールドをスーパークラスに移動したいが、
 	//JPAがフィールドとして処理しなくなるのでサブクラスに記述。
@@ -23,31 +23,20 @@ public class PracticePlanId extends BaseEntity {
 	public String getId() {
 		return this.id;
 	}
-	
-	@Override
-	public boolean equals(Object anObject){
-		
-		if(anObject == this) return true; //等値なので等価
-		if(anObject == null) return false;
-		
-		if(anObject instanceof PracticePlanId){
-			PracticePlanId typedObject = (PracticePlanId) anObject;
-			if(this.getId().equals(typedObject.getId())){
-				//idが同じならば等価
-				return true;
-			}
+
+	protected boolean isEquals(Object anObject){
+		PracticePlanId typedObject = (PracticePlanId) anObject;
+		if(this.getId().equals(typedObject.getId())){
+			//idが同じならば等価
+			return true;
 		}
 		return false;
 	}
-	
-	@Override
-	public int hashCode(){
-		//適当な初期値
-		int result = 37;
 
+	protected int addHashCodeValue(int aResult){
+		int result = 0;
 		//resultに各フィールドの影響を加える
 		result = result * 31 + this.getId().hashCode();
-
 		return result;
 	}
 	

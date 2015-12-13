@@ -4,6 +4,7 @@ import javax.persistence.Embeddable;
 
 import com.jurin_n.domain.model.BaseEntity;
 
+
 @Embeddable
 public class PracticeMemberId extends BaseEntity {
 	
