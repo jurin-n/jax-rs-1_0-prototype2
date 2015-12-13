@@ -2,8 +2,13 @@ package com.jurin_n.domain.model.practice.record;
 
 import javax.persistence.Embeddable;
 
+import com.jurin_n.domain.model.BaseEntity;
+
 @Embeddable
-public class PracticeRecordId {
+public class PracticeRecordId extends BaseEntity {
+	
+	//このidフィールドをスーパークラスに移動したいが、
+	//JPAがフィールドとして処理しなくなるのでサブクラスに記述。
 	private String id;
 	
 	public PracticeRecordId(){

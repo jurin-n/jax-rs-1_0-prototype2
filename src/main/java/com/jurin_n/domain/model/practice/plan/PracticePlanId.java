@@ -7,6 +7,8 @@ import com.jurin_n.domain.model.BaseEntity;
 @Embeddable
 public class PracticePlanId extends BaseEntity {
 
+	//このidフィールドをスーパークラスに移動したいが、
+	//JPAがフィールドとして処理しなくなるのでサブクラスに記述。
 	private String id;
 	
 	public PracticePlanId(){
