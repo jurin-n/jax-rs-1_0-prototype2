@@ -34,7 +34,7 @@ public class PracticePlanId extends BaseIdEntity {
 	}
 
 	protected int addHashCodeValue(int aResult){
-		int result = 0;
+		int result = aResult;
 		//resultに各フィールドの影響を加える
 		result = result * 31 + this.getId().hashCode();
 		return result;
