@@ -17,14 +17,12 @@ import com.jurin_n.domain.model.practice.menu.PracticeMenuRepository;
 import com.jurin_n.domain.model.practice.plan.PracticePlan;
 import com.jurin_n.domain.model.practice.plan.PracticePlanId;
 import com.jurin_n.domain.model.practice.plan.PracticePlanRepository;
-import com.jurin_n.domain.model.practice.plan.PracticePlanService;
 import com.jurin_n.domain.model.practice.record.PracticeRecord;
 import com.jurin_n.domain.model.practice.record.PracticeRecordId;
 import com.jurin_n.domain.model.practice.record.PracticeRecordRepository;
 
 @Stateless
 public class PracticeApplicationService {
-	@Inject PracticePlanService ps;
 	@Inject PracticePlanRepository planRepo;
 	@Inject PracticeMemberRepository memberRepo;
 	@Inject PracticeMenuRepository menuRepo;
@@ -33,7 +31,7 @@ public class PracticeApplicationService {
 	// PracticePlan
 	//
 	public List<PracticePlan> getPracticePlanList() {
-		List<PracticePlan> list  = ps.getPracticePlanList();
+		List<PracticePlan> list  = planRepo.getAll();
 		List<PracticePlan> resultList  = new ArrayList<>();
 		for(PracticePlan plan : list){
 			plan.setPracticeMember(

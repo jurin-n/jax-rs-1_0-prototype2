@@ -1,7 +1,6 @@
 package com.jurin_n.domain.model.practice.plan;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -32,9 +31,5 @@ public class PracticePlanService {
 		
 		repo.add(plan);	
 		return plan.getPracticePlanId();
-	}
-
-	public List<PracticePlan> getPracticePlanList() {
-		return repo.getAll();
 	}
 }
