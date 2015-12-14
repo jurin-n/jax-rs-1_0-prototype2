@@ -24,6 +24,7 @@ public class PracticePlanId extends BaseIdEntity {
 		return this.id;
 	}
 
+	@Override
 	protected boolean isEquals(Object anObject){
 		PracticePlanId typedObject = (PracticePlanId) anObject;
 		if(this.getId().equals(typedObject.getId())){
@@ -33,6 +34,7 @@ public class PracticePlanId extends BaseIdEntity {
 		return false;
 	}
 
+	@Override
 	protected int addHashCodeValue(int aResult){
 		int result = aResult;
 		//resultに各フィールドの影響を加える
