@@ -29,4 +29,16 @@ public class JsonMarshallerTest {
 				, null);
 		assertThat(result,is(-1L));
 	}
+	
+	@Test
+	public void test_isWriteable_trueになるケース(){
+		Class<?> clazz = json.getClass();
+		assertThat(sut.isWriteable(clazz, null, null, null), is(true));
+	}
+	
+	@Test
+	public void test_isWriteable_falseになるケース(){
+		Class<?> clazz = String.class;
+		assertThat(sut.isWriteable(clazz, null, null, null), is(false));
+	}
 }
