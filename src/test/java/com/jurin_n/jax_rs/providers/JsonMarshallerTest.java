@@ -2,29 +2,35 @@ package com.jurin_n.jax_rs.providers;
 
 import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurin_n.jax_rs.representation.PracticeMenuRepresentation;
 
 public class JsonMarshallerTest {
 
+	@Rule
+	public TemporaryFolder tempFolder = new TemporaryFolder();
+
 	private JsonMarshaller sut;
 	private PracticeMenuRepresentation json;
+	private PracticeMenuRepresentation json2;
 	
 	@Before
 	public void setUp(){
 		sut = new JsonMarshaller();
 		json = new PracticeMenuRepresentation("id001","メニュー");
+		json2 = new PracticeMenuRepresentation("id001",null);
 	}
 	
 	@Test
@@ -50,22 +56,48 @@ public class JsonMarshallerTest {
 		assertThat(sut.isWriteable(clazz, null, null, null), is(false));
 	}
 	
-	@Ignore("テストの書き方わからずorz")
 	@Test
-	public void test_writeTo(){
-        // バイト配列ストリームを作る
-        ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        
-        // バイト配列ストリームをオブジェクトストリームでラップ
-        ObjectOutputStream oout;
-		try {
-			oout = new ObjectOutputStream(bout);
-			sut.writeTo(json, null, null, null, null, null, oout);
+	public void test_writeTo_PracticeMenuRepresentationオブジェクトをjsonに変換できる(){
+        try {
+        	//初期化
+			File file = tempFolder.newFile("json.txt");
+			FileOutputStream fos = new FileOutputStream(file);
+			
+			//テスト対象実行
+			sut.writeTo(json, null, null, null, null, null, fos);
+			
+			fos.close();
+			
+			//json読み込み
 			ObjectMapper mapper = new ObjectMapper();
-			PracticeMenuRepresentation jsonMarshal = mapper.readValue(bout.toString("UTF-8"),PracticeMenuRepresentation.class);
-			System.out.println(jsonMarshal.getId());
-			System.out.println(jsonMarshal.getMenu());
-		} catch (IOException e) {
+			PracticeMenuRepresentation jsonMarshal
+					= mapper.readValue(file,PracticeMenuRepresentation.class);
+			
+			//検証
+			assertThat(jsonMarshal.getId(),is(json.getId()));
+			assertThat(jsonMarshal.getMenu(),is(json.getMenu()));
+
+			
+			
+        	//初期化
+			File file2 = tempFolder.newFile("json2.txt");
+			FileOutputStream fos2 = new FileOutputStream(file2);
+			
+			//テスト対象実行
+			sut.writeTo(json2, null, null, null, null, null, fos2);
+			
+			fos2.close();
+			
+			//json読み込み
+			ObjectMapper mapper2 = new ObjectMapper();
+			PracticeMenuRepresentation jsonMarshal2
+					= mapper2.readValue(file2,PracticeMenuRepresentation.class);
+			
+			//検証
+			assertThat(jsonMarshal2.getId(),is(json2.getId()));
+			assertThat(jsonMarshal2.getMenu(),is(nullValue()));
+		
+        } catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
