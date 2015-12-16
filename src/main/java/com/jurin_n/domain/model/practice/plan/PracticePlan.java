@@ -25,7 +25,11 @@ import com.jurin_n.jax_rs.representation.PracticePlanRepresentation;
 @Entity
 @Table(name="t_PracticePlan")
 @NamedQueries({
-	@NamedQuery(name = "PracticePlan.FIND_ALL", query = "select p from PracticePlan p")
+	 @NamedQuery(name = "PracticePlan.FIND_ALL", query = "select p from PracticePlan p")
+	,@NamedQuery(
+			  name = "PracticePlan.CONTAINS_MENU"
+			, query = "select p from PracticePlan p where p.practiceMenuId = ?1"
+			)
 })
 public class PracticePlan extends BaseEntity {
 

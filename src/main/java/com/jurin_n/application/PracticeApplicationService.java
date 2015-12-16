@@ -119,8 +119,17 @@ public class PracticeApplicationService {
 		menuRepo.update(aMenu);
 	}
 	public void deletePracticeMenu(PracticeMenuId practiceMenuId) {
-		PracticeMenu aMember = menuRepo.getMenuById(practiceMenuId);
-		menuRepo.remove(aMember);
+		List<PracticePlan> list = planRepo.getPracticePlanByMenuId(practiceMenuId);
+		
+		if(list.size() == 0){
+			PracticeMenu aMember = menuRepo.getMenuById(practiceMenuId);
+			if(aMember == null){
+				throw new RuntimeException("削除対象がありません。");
+			}
+			menuRepo.remove(aMember);
+			return;
+		}
+		throw new RuntimeException("プランに登録中のメニューのため削除できません。");
 	}
 	
 	//
