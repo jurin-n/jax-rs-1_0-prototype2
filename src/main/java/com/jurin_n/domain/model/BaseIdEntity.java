@@ -2,6 +2,7 @@ package com.jurin_n.domain.model;
 
 // 実験中：Idクラスのスーパークラス検討のため試しに実装。
 public abstract class BaseIdEntity {
+	
 	protected abstract boolean isEquals(Object anObject);
 	protected abstract int addHashCodeValue(int aResult);
 	
