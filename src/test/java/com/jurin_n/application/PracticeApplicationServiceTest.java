@@ -50,8 +50,8 @@ public class PracticeApplicationServiceTest {
 	@Test(expected=RuntimeException.class)
 	public void test_deletePracticeMenu_削除対象が存在しない場合_例外スロー() {
 		em.getTransaction().begin();
-		PracticeMenuId id = new PracticeMenuId("test");
-		sut.deletePracticeMenu(id);
+		PracticeMenuId menuId = menuRepo.nextIdentity();
+		sut.deletePracticeMenu(menuId);
 		em.getTransaction().commit();
 	}
 	
@@ -59,14 +59,15 @@ public class PracticeApplicationServiceTest {
 	public void test_deletePracticeMenu_削除対象のメニューがプランに登録中なのでエラー() {
 		//初期化
 		em.getTransaction().begin();
+		PracticeMenuId menuId = menuRepo.nextIdentity();
 		PracticeMenu menu = new PracticeMenu(
-				 new PracticeMenuId("menu001")
+				 menuId
 				,"メニュー"
 				);
 		menuRepo.add(menu);
 		planRepo.add(new PracticePlan(
 							 new PracticePlanId("plan001")
-							,menu.getPracticeMenuId()
+							,menuId
 							,new PracticeMemberId("member001")
 							,new Date()
 							,new Date()
@@ -76,16 +77,17 @@ public class PracticeApplicationServiceTest {
 		
 		//テストの実行
 		em.getTransaction().begin();
-		sut.deletePracticeMenu(menu.getPracticeMenuId());
+		sut.deletePracticeMenu(menuId);
 		em.getTransaction().commit();
 	}
 
 	@Test
-	public void test_deletePracticeMenu_削除対象のメニューがプランなければ正常終了() {
+	public void test_deletePracticeMenu_削除対象のメニューがプランになければ正常に削除() {
 		//初期化
 		em.getTransaction().begin();
+		PracticeMenuId menuId = menuRepo.nextIdentity();
 		PracticeMenu menu = new PracticeMenu(
-				 new PracticeMenuId("menu002")
+				 menuId
 				,"メニュー"
 				);
 		menuRepo.add(menu);
@@ -93,7 +95,7 @@ public class PracticeApplicationServiceTest {
 		
 		//テストの実行
 		em.getTransaction().begin();
-		sut.deletePracticeMenu(menu.getPracticeMenuId());
+		sut.deletePracticeMenu(menuId);
 		em.getTransaction().commit();
 	}
 }

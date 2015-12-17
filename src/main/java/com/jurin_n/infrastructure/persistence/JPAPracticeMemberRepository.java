@@ -37,7 +37,6 @@ public class JPAPracticeMemberRepository implements PracticeMemberRepository {
 	
 	@Override
 	public void add(PracticeMember aMember) {
-		aMember.setMemberId(this.nextIdentity());
 		em.persist(aMember);
 	}
 

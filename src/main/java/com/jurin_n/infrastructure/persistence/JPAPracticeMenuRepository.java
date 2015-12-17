@@ -39,7 +39,6 @@ public class JPAPracticeMenuRepository implements PracticeMenuRepository {
 
 	@Override
 	public void add(PracticeMenu aPracticeMenu) {
-		aPracticeMenu.setMemberId(this.nextIdentity());
 		em.persist(aPracticeMenu);
 	}
 	

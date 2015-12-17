@@ -45,7 +45,10 @@ public class JPAPracticeMemberRepositoryTest {
 		 * 1つ追加
 		 */		
 		//JAX-RSからの新規登録リクエスト
-		PracticeMemberRepresentation aMember = new PracticeMemberRepresentation(null, "テスト　太郎");
+		PracticeMemberRepresentation aMember
+				= new PracticeMemberRepresentation(
+							  repo.nextIdentity().getId()
+							, "テスト　太郎");
 		//リクエスト -> モデル変換
 		PracticeMember addMember = new PracticeMember(aMember);
 
@@ -111,12 +114,16 @@ public class JPAPracticeMemberRepositoryTest {
 		/*
 		 * 3つ追加
 		 */		
-		//JAX-RSからの新規登録リクエスト
-		PracticeMemberRepresentation aMember = new PracticeMemberRepresentation(null, "テスト　太郎");
 		//リクエスト -> モデル変換
-		PracticeMember addMember1 = new PracticeMember(aMember);
-		PracticeMember addMember2 = new PracticeMember(aMember);
-		PracticeMember addMember3 = new PracticeMember(aMember);
+		PracticeMember addMember1 = new PracticeMember(
+										new PracticeMemberRepresentation(repo.nextIdentity().getId(), "テスト　太郎")
+									);
+		PracticeMember addMember2 = new PracticeMember(
+										new PracticeMemberRepresentation(repo.nextIdentity().getId(), "テスト　二郎")
+									);
+		PracticeMember addMember3 = new PracticeMember(
+										new PracticeMemberRepresentation(repo.nextIdentity().getId(), "テスト　三郎")
+									);
 		//登録
 		em.getTransaction().begin();
 		repo.add(addMember1);	
