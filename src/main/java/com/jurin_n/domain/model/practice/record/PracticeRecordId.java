@@ -1,11 +1,16 @@
 package com.jurin_n.domain.model.practice.record;
 
+import java.io.Serializable;
 import javax.persistence.Embeddable;
-
 import com.jurin_n.domain.model.BaseEntity;
 
 @Embeddable
-public class PracticeRecordId extends BaseEntity {
+public class PracticeRecordId extends BaseEntity implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	//このidフィールドをスーパークラスに移動したいが、
 	//JPAがフィールドとして処理しなくなるのでサブクラスに記述。
