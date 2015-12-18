@@ -119,7 +119,7 @@ public class PracticeApplicationService {
 		menuRepo.update(aMenu);
 	}
 	public void deletePracticeMenu(PracticeMenuId practiceMenuId) {
-		List<PracticePlan> list = planRepo.getPracticePlanByMenuId(practiceMenuId);
+		List<PracticePlan> list = planRepo.getOpenPlanByMenuId(practiceMenuId);
 		
 		if(list.size() == 0){
 			PracticeMenu aMember = menuRepo.getMenuById(practiceMenuId);

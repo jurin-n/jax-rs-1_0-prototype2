@@ -11,5 +11,5 @@ public interface PracticePlanRepository {
 	public PracticePlanId nextIdentity();
 	public PracticePlan getPracticePlanById(String id);
 	public PracticePlan getPracticePlanById(PracticePlanId practicePlanId);
-	public List<PracticePlan> getPracticePlanByMenuId(PracticeMenuId practiceMenuId);
+	public List<PracticePlan> getOpenPlanByMenuId(PracticeMenuId practiceMenuId);
 }
