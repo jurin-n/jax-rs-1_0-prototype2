@@ -4,11 +4,9 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -18,25 +16,22 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import com.jurin_n.domain.model.practice.member.PracticeMember;
 import com.jurin_n.domain.model.practice.member.PracticeMemberRepository;
 import com.jurin_n.jax_rs.representation.PracticeMemberRepresentation;
+import com.jurin_n.junit.rules.JPAResource;
 
-public class JPAPracticeMemberRepositoryTest {
-    private static EntityManager getEm() {
-    	return Persistence.createEntityManagerFactory("jax-rs-1_0-prototype2-UnitTest")
-                .createEntityManager();
-    }
-    private PracticeMemberRepository repo;
-    private EntityManager em;
+public class JPAPracticeMemberRepositoryTest {    
+    private PracticeMemberRepository sut;
 	
+    @Rule
+    public JPAResource jpa = new JPAResource();
+    
     @Before
 	public void setUp(){
-    	em = this.getEm();
-		repo = new JPAPracticeMemberRepository(em);
+    	sut = new JPAPracticeMemberRepository(jpa.getEm());
 	}
 	
     @After
 	public void tearDown(){
-    	em.close();
-    	repo = null;
+    	sut = null;
 	}
 	
     @Test
@@ -47,18 +42,18 @@ public class JPAPracticeMemberRepositoryTest {
 		//JAX-RSからの新規登録リクエスト
 		PracticeMemberRepresentation aMember
 				= new PracticeMemberRepresentation(
-							  repo.nextIdentity().getId()
+							  sut.nextIdentity().getId()
 							, "テスト　太郎");
 		//リクエスト -> モデル変換
 		PracticeMember addMember = new PracticeMember(aMember);
 
 		//登録
-		em.getTransaction().begin();
-		repo.add(addMember);		
-		em.getTransaction().commit();
+		jpa.getEm().getTransaction().begin();
+		sut.add(addMember);		
+		jpa.getEm().getTransaction().commit();
 		
 		// 追加したPracticeMemberを検索
-		PracticeMember gotMember = repo.getMemberById(addMember.getPracticeMemberId());
+		PracticeMember gotMember = sut.getMemberById(addMember.getPracticeMemberId());
 		
 		assertThat(gotMember,is(not(nullValue())));
 		assertThat(gotMember.getPracticeMemberId()
@@ -78,13 +73,13 @@ public class JPAPracticeMemberRepositoryTest {
 		//リクエスト -> モデル変換
 		PracticeMember updateMember = new PracticeMember(aMember);
 		//更新
-		em.getTransaction().begin();
-		repo.update(updateMember);
-		em.getTransaction().commit();
+		jpa.getEm().getTransaction().begin();
+		sut.update(updateMember);
+		jpa.getEm().getTransaction().commit();
 		
 		
 		//更新したPracticeMemberを検索
-		gotMember = repo.getMemberById(updateMember.getPracticeMemberId());
+		gotMember = sut.getMemberById(updateMember.getPracticeMemberId());
 		
 		assertThat(gotMember,is(not(nullValue())));
 		assertThat(gotMember.getPracticeMemberId()
@@ -93,7 +88,7 @@ public class JPAPracticeMemberRepositoryTest {
 				,is(updateMember.getName())); //更新後の名称になってること確認
 		
 		//テストで使ったデータを削除。
-		repo.remove(gotMember);
+		sut.remove(gotMember);
 	}
 	
     @Test(expected=IllegalStateException.class)
@@ -103,10 +98,10 @@ public class JPAPracticeMemberRepositoryTest {
 		//リクエスト -> モデル変換
 		PracticeMember updateMember = new PracticeMember(aMember);
 		//更新
-		em.getTransaction().begin();
-		repo.update(updateMember);
+		jpa.getEm().getTransaction().begin();
+		sut.update(updateMember);
 		fail();
-		em.getTransaction().commit();
+		jpa.getEm().getTransaction().commit();
     }
     
 	@Test
@@ -116,21 +111,21 @@ public class JPAPracticeMemberRepositoryTest {
 		 */		
 		//リクエスト -> モデル変換
 		PracticeMember addMember1 = new PracticeMember(
-										new PracticeMemberRepresentation(repo.nextIdentity().getId(), "テスト　太郎")
+										new PracticeMemberRepresentation(sut.nextIdentity().getId(), "テスト　太郎")
 									);
 		PracticeMember addMember2 = new PracticeMember(
-										new PracticeMemberRepresentation(repo.nextIdentity().getId(), "テスト　二郎")
+										new PracticeMemberRepresentation(sut.nextIdentity().getId(), "テスト　二郎")
 									);
 		PracticeMember addMember3 = new PracticeMember(
-										new PracticeMemberRepresentation(repo.nextIdentity().getId(), "テスト　三郎")
+										new PracticeMemberRepresentation(sut.nextIdentity().getId(), "テスト　三郎")
 									);
 		//登録
-		em.getTransaction().begin();
-		repo.add(addMember1);	
-		repo.add(addMember2);
-		repo.add(addMember3);
-		em.getTransaction().commit();
-		List<PracticeMember> list =  repo.getPracticeMemberAll();
+		jpa.getEm().getTransaction().begin();
+		sut.add(addMember1);	
+		sut.add(addMember2);
+		sut.add(addMember3);
+		jpa.getEm().getTransaction().commit();
+		List<PracticeMember> list =  sut.getPracticeMemberAll();
 		
 		assertThat(list.size(),is(3));
 	}
