@@ -25,7 +25,7 @@ public class JPAResource extends ExternalResource {
 		Logger.getAnonymousLogger().info("EntityManger close.");
 	}
 	
-    public EntityManager getEm() {
-    	return this.em;
-    }
+	public EntityManager getEm() {
+		return this.em;
+	}
 }
