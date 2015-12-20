@@ -50,11 +50,37 @@ public class UserTest {
 		permissins2.add(PermissionValue.readMenu);
 		permissins2.add(PermissionValue.readMember);
 		permissins2.add(PermissionValue.readRecord);
-		Role role2 = new Role("role102",RoleValue.MEMBER,permissins);
+		Role role2 = new Role("role102",RoleValue.MEMBER,permissins2);
 		jpa.getEm().getTransaction().begin();
 		jpa.getEm().persist(role);
 		jpa.getEm().persist(role2);
 		jpa.getEm().getTransaction().commit(); 	
+
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);
+		roles.add(role2);
+		
+		User user = new User(
+				 new UserId("user001")
+				,"テスト　太郎"
+				,roles
+				,Status.ACTIVE);
+		jpa.getEm().getTransaction().begin();
+		jpa.getEm().persist(user);
+		jpa.getEm().getTransaction().commit(); 
+		
+		User selectedUser = jpa.getEm().find(User.class,new UserId("user001"));
+		Set<Role> usersRole = selectedUser.getRoles();
+		for(Role r: usersRole){
+			Set<PermissionValue> rolesPermisions = r.getPermissions();
+			System.out.println("usersRole=" + r.getValue());
+			if(rolesPermisions.contains(PermissionValue.writePlan)){
+				System.out.println("プラン編集できます！！");
+			}
+			for(PermissionValue p :rolesPermisions){
+				System.out.println("rolesPermisions=" + p.toString());
+			}
+		}
 	}
 
 }
