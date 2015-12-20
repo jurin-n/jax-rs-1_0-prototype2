@@ -2,6 +2,7 @@ package com.jurin_n.domain.model.identity.role;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,9 +19,18 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
 	private RoleValue value;
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private Set<Permission> permissions;
 	
+	public Role(){
+		super();
+	}
+	
+	public Role(RoleValue value, Set<Permission> permissions) {
+		super();
+		this.value = value;
+		this.permissions = permissions;
+	}	
 	public String getId() {
 		return id;
 	}
@@ -34,10 +44,14 @@ public class Role {
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public void setValue(RoleValue value) {
 		this.value = value;
 	}
+
 	public void setPermissions(Set<Permission> permissions) {
 		this.permissions = permissions;
 	}
+	
+	
 }
