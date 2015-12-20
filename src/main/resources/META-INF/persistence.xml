@@ -15,8 +15,10 @@
 		<class>com.jurin_n.domain.model.team.Team</class>
 		<class>com.jurin_n.domain.model.identity.user.UserId</class>
 		<class>com.jurin_n.domain.model.identity.role.Role</class>
-		<class>com.jurin_n.domain.model.identity.permission.Permission</class>
+		<!-- <class>com.jurin_n.domain.model.identity.permission.Permission</class> -->
 		<class>com.jurin_n.domain.model.identity.user.User</class>
+
+		
 		<properties>
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 			<property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>

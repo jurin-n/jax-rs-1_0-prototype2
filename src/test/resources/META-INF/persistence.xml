@@ -15,11 +15,11 @@
 		<class>com.jurin_n.domain.model.team.Team</class>
 		<class>com.jurin_n.domain.model.identity.user.UserId</class>
 		<class>com.jurin_n.domain.model.identity.role.Role</class>
-		<class>com.jurin_n.domain.model.identity.permission.Permission</class>
+		<!-- <class>com.jurin_n.domain.model.identity.permission.Permission</class> -->
 		<class>com.jurin_n.domain.model.identity.user.User</class>
 		<properties>
 			<!-- 実行時にテーブルの生成をメタデータ（エンティティ）から行う。 -->
-			<!-- <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> -->
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 			<!-- <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/> -->
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 			<!-- <property name="javax.persistence.schema-generation.create-source" value="metadata"/>-->
@@ -33,7 +33,7 @@
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
 			<property name="javax.persistence.jdbc.user" value="APP"/>
 			<property name="javax.persistence.jdbc.password" value="APP"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/db1;create=true"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/db2;create=true"/>
 			
 		</properties>
 	</persistence-unit>

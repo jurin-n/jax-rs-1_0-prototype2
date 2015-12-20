@@ -12,8 +12,8 @@ import javax.persistence.Table;
 
 import com.jurin_n.domain.model.identity.role.Role;
 
-@Entity
-@Table(name="t_Permission")
+//@Entity
+//@Table(name="t_Permission")
 public class Permission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

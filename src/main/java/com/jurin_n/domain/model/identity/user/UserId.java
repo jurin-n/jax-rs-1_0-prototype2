@@ -11,7 +11,7 @@ public class UserId extends BaseEntity implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
 	//このidフィールドをスーパークラスに移動したいが、
 	//JPAがフィールドとして処理しなくなるのでサブクラスに記述。
