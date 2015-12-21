@@ -34,7 +34,6 @@
 			<property name="javax.persistence.jdbc.user" value="APP"/>
 			<property name="javax.persistence.jdbc.password" value="APP"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/db1;create=true"/>
-			
 		</properties>
 	</persistence-unit>
 </persistence>

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Query;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -32,6 +33,7 @@ public class UserTest {
 		jpa.getEm().getTransaction().commit();
 	}
     
+	@Ignore
 	@Test
 	public void test_RoleとPermissions作成() {
 		Set<PermissionValue> permissins = new HashSet<>();
@@ -82,5 +84,19 @@ public class UserTest {
 			}
 		}
 	}
+	@Test
+	public void test_UserにRole付与() {
+		Role role = jpa.getEm().find(Role.class, "role102");
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);
+		User user = new User(
+				 new UserId("user002")
+				,"テスト　二郎"
+				,roles
+				,Status.ACTIVE);
+		jpa.getEm().getTransaction().begin();
+		jpa.getEm().persist(user);
+		jpa.getEm().getTransaction().commit(); 
 
+	}
 }
