@@ -5,11 +5,15 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.jurin_n.domain.model.identity.Status;
+import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.role.Role;
+import com.jurin_n.domain.model.identity.role.RoleValue;
 
 @Entity
 @Table(name = "t_User")
@@ -59,4 +63,23 @@ public class User {
 		this.status = status;
 	}
 	
+	//ロールが存在するか確認
+	public boolean inRole(RoleValue aRole) {
+		for(Role role : roles){
+			if(role.getValue().equals(aRole)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//パーミッションが存在するか確認
+	public boolean inPermission(PermissionValue aPermission) {
+		for(Role role : roles){
+			if(role.inPermission(aPermission)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

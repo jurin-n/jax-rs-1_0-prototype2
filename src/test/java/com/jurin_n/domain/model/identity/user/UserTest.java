@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -22,8 +23,10 @@ import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.role.Role;
 import com.jurin_n.domain.model.identity.role.RoleValue;
 import com.jurin_n.junit.rules.JPAResource;
-import static org.hamcrest.core.Is.is;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 public class UserTest {
 
 	@ClassRule
@@ -134,5 +137,69 @@ public class UserTest {
 		jpa.getEm().getTransaction().begin();
 		jpa.getEm().persist(user);
 		jpa.getEm().getTransaction().commit(); 
+	}
+	
+	@Test
+	public void test_UserにADMINのRoleが含まれることを確認() {
+		/* セットアップ：ADMINロールを保持してるユーザ作成 */
+		Role role = jpa.getEm().find(Role.class, "role101");
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);
+		User user = new User(
+				 new UserId("user003")
+				,"テスト　アド民"
+				,roles
+				,Status.ACTIVE);
+		jpa.getEm().getTransaction().begin();
+		jpa.getEm().persist(user);
+		jpa.getEm().getTransaction().commit();
+		
+		//ADMINロール保持してるユーザ検索
+		User selectedUser = jpa.getEm().find(User.class, new UserId("user003"));
+		assertThat(selectedUser, is(not(nullValue())));
+
+		/* アサーション */
+		//セットアップしたユーザであるかチェック
+		assertThat(selectedUser.getUserid(), is(user.getUserid()));
+		assertThat(selectedUser.getRoles(), is(user.getRoles()));
+		//ADMINロール保持してるかチェック
+		assertThat(selectedUser.inRole(RoleValue.ADMIN), is(true));
+		//MEMBERロール保持してないことチェック
+		assertThat(selectedUser.inRole(RoleValue.MEMBER), is(false));
+	}
+	
+	@Test
+	public void test_MEMBERロールを保持するUserにreadPlanのパーミッションが含まれることを確認() {
+		/* セットアップ：MEMBERロールを保持してるユーザ作成 */
+		Role role = jpa.getEm().find(Role.class, "role102");
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);
+		User user = new User(
+				 new UserId("user004")
+				,"テスト　メンバー"
+				,roles
+				,Status.ACTIVE);
+		jpa.getEm().getTransaction().begin();
+		jpa.getEm().persist(user);
+		jpa.getEm().getTransaction().commit();
+		
+		//MEMBERロール保持してるユーザ検索
+		User selectedUser = jpa.getEm().find(User.class, new UserId("user004"));
+		assertThat(selectedUser, is(not(nullValue())));
+
+		/* アサーション */
+		//セットアップしたユーザであるかチェック
+		assertThat(selectedUser.getUserid(), is(user.getUserid()));
+		assertThat(selectedUser.getRoles(), is(user.getRoles()));
+		//ADMINロール保持してるかチェック
+		assertThat(selectedUser.inRole(RoleValue.MEMBER), is(true));
+		//MEMBERロール保持してないことチェック
+		assertThat(selectedUser.inRole(RoleValue.ADMIN), is(false));
+		
+		//readPlanのパーミッション含まれることチェック
+		assertThat(selectedUser.inPermission(PermissionValue.readPlan), is(true));
+
+		//writePlanのパーミッション含まれてないことチェック
+		assertThat(selectedUser.inPermission(PermissionValue.writePlan), is(false));
 	}
 }

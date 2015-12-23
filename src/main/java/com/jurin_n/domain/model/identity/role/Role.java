@@ -69,4 +69,9 @@ public class Role {
 	public void setPermissions(Set<PermissionValue> permissions) {
 		this.permissions = permissions;
 	}
+	
+	//パーミッションが存在するか確認
+	public boolean inPermission(PermissionValue aPermission) {
+		return permissions.contains(aPermission);
+	}
 }
