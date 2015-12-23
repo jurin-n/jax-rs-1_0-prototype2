@@ -23,6 +23,7 @@ public class Role {
 	@CollectionTable(name="t_permissions")
 	@Enumerated(EnumType.STRING)
 	private Set<PermissionValue> permissions;
+	private String description;
 	
 	public Role(){
 		super();

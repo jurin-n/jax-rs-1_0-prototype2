@@ -1,17 +1,23 @@
 package com.jurin_n.domain.model.identity.user;
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Query;
 
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 
 import com.jurin_n.domain.model.identity.Status;
-import com.jurin_n.domain.model.identity.permission.Permission;
 import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.role.Role;
 import com.jurin_n.domain.model.identity.role.RoleValue;
@@ -19,12 +25,41 @@ import com.jurin_n.junit.rules.JPAResource;
 import static org.hamcrest.core.Is.is;
 
 public class UserTest {
-    private User sut;
-	
-    @Rule
-    public JPAResource jpa = new JPAResource();
 
-    //@Test
+	@ClassRule
+	public static JPAResource jpa = new JPAResource();
+
+	public static void executeNativeSQL(String scriptPath,String characterSet) throws IOException{
+		//sqlを読み込む
+		Path path = Paths.get(scriptPath);
+		List<String> lines 
+			= Files.readAllLines(path, Charset.forName(characterSet)); //Shift-JISの場合は、MS932 指定？
+		if(lines.size() != 0){
+			jpa.getEm().getTransaction().begin();
+			for(String line : lines){
+				if(line.trim().length() == 0 ||line.startsWith("#") ){
+					//実行なし
+				}else{
+					//実行
+					Query q = jpa.getEm().createNativeQuery(line);
+					q.executeUpdate();
+				}
+			}
+			jpa.getEm().getTransaction().commit();
+		}
+	}
+	@BeforeClass
+	public static void setUpClass() throws IOException{
+		executeNativeSQL("./src/test/resources/setupScript.sql","UTF-8");
+	}
+	
+	//@AfterClass //t_userとの参照整合の関係でdeleteできず
+	public static void tearDownClass() throws IOException{
+		executeNativeSQL("./src/test/resources/tearDownScript.sql","UTF-8");
+	}
+	
+	@Ignore
+	@Test
 	public void test_Roleクリア() {
 		jpa.getEm().getTransaction().begin();
 		Query q = jpa.getEm().createQuery("DELETE FROM Role c");
@@ -32,9 +67,9 @@ public class UserTest {
 		jpa.getEm().flush();
 		jpa.getEm().getTransaction().commit();
 	}
-    
+
 	@Ignore
-	@Test
+	//@Test
 	public void test_RoleとPermissions作成() {
 		Set<PermissionValue> permissins = new HashSet<>();
 		permissins.add(PermissionValue.readPlan);
@@ -84,6 +119,8 @@ public class UserTest {
 			}
 		}
 	}
+	
+	//@Ignore
 	@Test
 	public void test_UserにRole付与() {
 		Role role = jpa.getEm().find(Role.class, "role102");
@@ -97,6 +134,5 @@ public class UserTest {
 		jpa.getEm().getTransaction().begin();
 		jpa.getEm().persist(user);
 		jpa.getEm().getTransaction().commit(); 
-
 	}
 }
