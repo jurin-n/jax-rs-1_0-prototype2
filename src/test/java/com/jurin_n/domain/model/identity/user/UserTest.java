@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
