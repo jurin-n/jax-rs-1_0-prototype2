@@ -32,11 +32,11 @@ public class AuthenticationServiceTest {
 	}
 	
 	@Test
-	public void test認証成功() {
+	public void test_authenticateFromHeader_認証成功() {
 		//初期化
 		User user = jpa.getEm().find(User.class, new UserId("user001"));
 		Map<String, String> headers = new HashMap<>();
-		headers.put("Authorization", "xxx");
+		headers.put("Authorization", "user001:xxxx");
 		headers.put("Date", "xxx");
 		
 		//テスト実行
@@ -44,15 +44,41 @@ public class AuthenticationServiceTest {
 		
 		//検証
 		assertThat(userDescriptor,is(not(nullValue())));
-		assertThat(userDescriptor.getUserid(),is(user.getUserid()));
+		assertThat(userDescriptor.getUserId(),is(user.getUserid()));
 	}
 
 	@Test
-	public void test認証失敗() {
+	public void test_authenticateFromHeader_存在しないユーザIDのため認証失敗() {
+		//初期化
+		Map<String, String> headers = new HashMap<>();
+		headers.put("Authorization", "xxxx001:xxxx");
+		headers.put("Date", "xxx");
+		
+		//テスト実行
+		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
+		
+		//検証
+		assertThat(userDescriptor,is(nullValue()));
+	}
+	
+	@Test
+	public void test_authenticateFromHeader_Authorizationヘッダがないため認証失敗() {
+		//初期化
+		Map<String, String> headers = new HashMap<>();
+		headers.put("Date", "xxx");
+
+		//テスト実行
+		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
+		
+		//検証
+		assertThat(userDescriptor,is(nullValue()));
+	}
+	
+	@Test
+	public void test_authenticateFromHeader_Dateヘッダがないため認証失敗() {
 		//初期化
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Authorization", "xxx");
-		headers.put("Date", "xxx");
 
 		//テスト実行
 		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
