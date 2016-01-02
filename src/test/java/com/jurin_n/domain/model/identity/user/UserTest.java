@@ -31,33 +31,14 @@ public class UserTest {
 	@ClassRule
 	public static JPAResource jpa = new JPAResource();
 
-	public static void executeNativeSQL(String scriptPath,String characterSet) throws IOException{
-		//sqlを読み込む
-		Path path = Paths.get(scriptPath);
-		List<String> lines 
-			= Files.readAllLines(path, Charset.forName(characterSet)); //Shift-JISの場合は、MS932 指定？
-		if(lines.size() != 0){
-			jpa.getEm().getTransaction().begin();
-			for(String line : lines){
-				if(line.trim().length() == 0 ||line.startsWith("#") ){
-					//実行なし
-				}else{
-					//実行
-					Query q = jpa.getEm().createNativeQuery(line);
-					q.executeUpdate();
-				}
-			}
-			jpa.getEm().getTransaction().commit();
-		}
-	}
 	@BeforeClass
 	public static void setUpClass() throws IOException{
-		executeNativeSQL("./src/test/resources/setupScript.sql","UTF-8");
+		jpa.executeNativeSQL("./src/test/resources/setupScript.sql","UTF-8");
 	}
 	
 	//@AfterClass //t_userとの参照整合の関係でdeleteできず
 	public static void tearDownClass() throws IOException{
-		executeNativeSQL("./src/test/resources/tearDownScript.sql","UTF-8");
+		jpa.executeNativeSQL("./src/test/resources/tearDownScript.sql","UTF-8");
 	}
 	
 	@Ignore
