@@ -2,12 +2,7 @@ package com.jurin_n.domain.model.identity.user;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Query;
