@@ -140,21 +140,17 @@ public class UserTest {
 	
 	@Test
 	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれてる場合_inRoleメソッドはtrueを返す() {
-		Role role = jpa.getEm().find(Role.class, "role101");
 		Set<Role> roles = new HashSet<>();
+		Role role = new Role();
+		role.setValue(RoleValue.ADMIN);
 		roles.add(role);
 		User user = new User(
 				 new UserId(A_USER_ID_FOR_TEST)
 				,A_USER_NAME_FOR_TEST
 				,roles
 				,Status.ACTIVE);
-		jpa.getEm().getTransaction().begin();
-		jpa.getEm().persist(user);
-		jpa.getEm().getTransaction().commit();
 		
-		User selectedUser = jpa.getEm().find(User.class, new UserId(A_USER_ID_FOR_TEST));
-
-		assertTrue(selectedUser.inRole(RoleValue.ADMIN));
+		assertTrue(user.inRole(RoleValue.ADMIN));
 	}
 	
 	@Test
@@ -165,7 +161,10 @@ public class UserTest {
 
 	@Test
 	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれている場合_inPermissionメソッドはtrueを返す() {
-		Role role = jpa.getEm().find(Role.class, "role102");
+		Role role = new Role();
+		Set<PermissionValue> permissions = new HashSet<>();
+		permissions.add(PermissionValue.readPlan);
+		role.setPermissions(permissions);
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);
 		User user = new User(
@@ -173,13 +172,8 @@ public class UserTest {
 				,A_USER_NAME_FOR_TEST
 				,roles
 				,Status.ACTIVE);
-		jpa.getEm().getTransaction().begin();
-		jpa.getEm().persist(user);
-		jpa.getEm().getTransaction().commit();
-		
-		User selectedUser = jpa.getEm().find(User.class, new UserId(A_USER_ID_FOR_TEST));
 
-		assertTrue(selectedUser.inPermission(PermissionValue.readPlan));
+		assertTrue(user.inPermission(PermissionValue.readPlan));
 	}
 	
 	@Test
