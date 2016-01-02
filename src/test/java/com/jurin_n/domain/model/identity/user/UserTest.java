@@ -5,11 +5,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Query;
-
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.jurin_n.domain.model.identity.Status;
