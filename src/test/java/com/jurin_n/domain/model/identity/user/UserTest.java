@@ -139,7 +139,8 @@ public class UserTest {
 	}
 	
 	@Test
-	public void test_UserにADMINのRoleが含まれることを確認() {
+//	public void test_UserにADMINのRoleが含まれることを確認() {
+	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれてる場合_inRoleメソッドはtrueを返す() {
 		/* セットアップ：ADMINロールを保持してるユーザ作成 */
 		Role role = jpa.getEm().find(Role.class, "role101");
 		Set<Role> roles = new HashSet<>();
@@ -168,7 +169,13 @@ public class UserTest {
 	}
 	
 	@Test
-	public void test_MEMBERロールを保持するUserにreadPlanのパーミッションが含まれることを確認() {
+	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれていない場合_inRoleメソッドはfalseを返す() {
+		fail("未実装");
+	}
+
+	@Test
+	//public void test_MEMBERロールを保持するUserにreadPlanのパーミッションが含まれることを確認() {
+	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれている場合_inPermissionメソッドはtrueを返す() {
 		/* セットアップ：MEMBERロールを保持してるユーザ作成 */
 		Role role = jpa.getEm().find(Role.class, "role102");
 		Set<Role> roles = new HashSet<>();
@@ -200,5 +207,10 @@ public class UserTest {
 
 		//writePlanのパーミッション含まれてないことチェック
 		assertThat(selectedUser.inPermission(PermissionValue.writePlan), is(false));
+	}
+	
+	@Test
+	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれていない場合_inPermissionメソッドはfalseを返す() {
+		fail("未実装");
 	}
 }
