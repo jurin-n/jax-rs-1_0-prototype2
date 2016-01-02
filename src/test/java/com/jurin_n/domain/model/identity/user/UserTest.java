@@ -139,7 +139,6 @@ public class UserTest {
 	
 	@Test
 	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれてる場合_inRoleメソッドはtrueを返す() {
-		/* セットアップ：ADMINロールを保持してるユーザ作成 */
 		Role role = jpa.getEm().find(Role.class, "role101");
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);
@@ -152,16 +151,11 @@ public class UserTest {
 		jpa.getEm().persist(user);
 		jpa.getEm().getTransaction().commit();
 		
-		//ADMINロール保持してるユーザ検索
 		User selectedUser = jpa.getEm().find(User.class, new UserId("user003"));
 
-		/* アサーション */
-		//セットアップしたユーザであるかチェック
 		assertThat(selectedUser.getUserid(), is(user.getUserid()));
 		assertThat(selectedUser.getRoles(), is(user.getRoles()));
-		//ADMINロール保持してるかチェック
 		assertThat(selectedUser.inRole(RoleValue.ADMIN), is(true));
-		//MEMBERロール保持してないことチェック
 		assertThat(selectedUser.inRole(RoleValue.MEMBER), is(false));
 	}
 	
@@ -172,7 +166,6 @@ public class UserTest {
 
 	@Test
 	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれている場合_inPermissionメソッドはtrueを返す() {
-		/* セットアップ：MEMBERロールを保持してるユーザ作成 */
 		Role role = jpa.getEm().find(Role.class, "role102");
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);
@@ -185,22 +178,13 @@ public class UserTest {
 		jpa.getEm().persist(user);
 		jpa.getEm().getTransaction().commit();
 		
-		//MEMBERロール保持してるユーザ検索
 		User selectedUser = jpa.getEm().find(User.class, new UserId("user004"));
 
-		/* アサーション */
-		//セットアップしたユーザであるかチェック
 		assertThat(selectedUser.getUserid(), is(user.getUserid()));
 		assertThat(selectedUser.getRoles(), is(user.getRoles()));
-		//ADMINロール保持してるかチェック
 		assertThat(selectedUser.inRole(RoleValue.MEMBER), is(true));
-		//MEMBERロール保持してないことチェック
-		assertThat(selectedUser.inRole(RoleValue.ADMIN), is(false));
-		
-		//readPlanのパーミッション含まれることチェック
+		assertThat(selectedUser.inRole(RoleValue.ADMIN), is(false));		
 		assertThat(selectedUser.inPermission(PermissionValue.readPlan), is(true));
-
-		//writePlanのパーミッション含まれてないことチェック
 		assertThat(selectedUser.inPermission(PermissionValue.writePlan), is(false));
 	}
 	
