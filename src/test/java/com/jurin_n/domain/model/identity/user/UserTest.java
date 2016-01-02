@@ -1,37 +1,20 @@
 package com.jurin_n.domain.model.identity.user;
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Test;
 
 import com.jurin_n.domain.model.identity.Status;
 import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.role.Role;
 import com.jurin_n.domain.model.identity.role.RoleValue;
-import com.jurin_n.junit.rules.JPAResource;
 
 public class UserTest {
 
 	private String A_USER_ID_FOR_TEST = "user001";
 	private String A_USER_NAME_FOR_TEST = "テスト　太郎";
-
-	@ClassRule
-	public static JPAResource jpa = new JPAResource();
-
-	@BeforeClass
-	public static void setUpClass() throws IOException{
-		jpa.executeNativeSQL("./src/test/resources/setupScript.sql","UTF-8");
-	}
-	
-	//@AfterClass //t_userとの参照整合の関係でdeleteできず
-	public static void tearDownClass() throws IOException{
-		jpa.executeNativeSQL("./src/test/resources/tearDownScript.sql","UTF-8");
-	}
 
 	@Test
 	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれてる場合_inRoleメソッドはtrueを返す() {
