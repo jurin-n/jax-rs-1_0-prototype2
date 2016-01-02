@@ -23,8 +23,6 @@ import com.jurin_n.domain.model.identity.role.Role;
 import com.jurin_n.domain.model.identity.role.RoleValue;
 import com.jurin_n.junit.rules.JPAResource;
 
-import static org.hamcrest.core.Is.is;
-
 public class UserTest {
 
 	@ClassRule
@@ -153,7 +151,7 @@ public class UserTest {
 		
 		User selectedUser = jpa.getEm().find(User.class, new UserId("user003"));
 
-		assertThat(selectedUser.inRole(RoleValue.ADMIN), is(true));
+		assertTrue(selectedUser.inRole(RoleValue.ADMIN));
 	}
 	
 	@Test
@@ -178,7 +176,7 @@ public class UserTest {
 		
 		User selectedUser = jpa.getEm().find(User.class, new UserId("user004"));
 
-		assertThat(selectedUser.inPermission(PermissionValue.readPlan), is(true));
+		assertTrue(selectedUser.inPermission(PermissionValue.readPlan));
 	}
 	
 	@Test
