@@ -24,8 +24,7 @@ import com.jurin_n.domain.model.identity.role.RoleValue;
 import com.jurin_n.junit.rules.JPAResource;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
-import static org.hamcrest.CoreMatchers.nullValue;
+
 public class UserTest {
 
 	@ClassRule
@@ -139,7 +138,6 @@ public class UserTest {
 	}
 	
 	@Test
-//	public void test_UserにADMINのRoleが含まれることを確認() {
 	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれてる場合_inRoleメソッドはtrueを返す() {
 		/* セットアップ：ADMINロールを保持してるユーザ作成 */
 		Role role = jpa.getEm().find(Role.class, "role101");
@@ -156,7 +154,6 @@ public class UserTest {
 		
 		//ADMINロール保持してるユーザ検索
 		User selectedUser = jpa.getEm().find(User.class, new UserId("user003"));
-		assertThat(selectedUser, is(not(nullValue())));
 
 		/* アサーション */
 		//セットアップしたユーザであるかチェック
@@ -174,7 +171,6 @@ public class UserTest {
 	}
 
 	@Test
-	//public void test_MEMBERロールを保持するUserにreadPlanのパーミッションが含まれることを確認() {
 	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれている場合_inPermissionメソッドはtrueを返す() {
 		/* セットアップ：MEMBERロールを保持してるユーザ作成 */
 		Role role = jpa.getEm().find(Role.class, "role102");
@@ -191,7 +187,6 @@ public class UserTest {
 		
 		//MEMBERロール保持してるユーザ検索
 		User selectedUser = jpa.getEm().find(User.class, new UserId("user004"));
-		assertThat(selectedUser, is(not(nullValue())));
 
 		/* アサーション */
 		//セットアップしたユーザであるかチェック
