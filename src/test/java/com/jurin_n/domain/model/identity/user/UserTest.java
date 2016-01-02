@@ -153,14 +153,12 @@ public class UserTest {
 		
 		User selectedUser = jpa.getEm().find(User.class, new UserId("user003"));
 
-		assertThat(selectedUser.getUserid(), is(user.getUserid()));
-		assertThat(selectedUser.getRoles(), is(user.getRoles()));
 		assertThat(selectedUser.inRole(RoleValue.ADMIN), is(true));
-		assertThat(selectedUser.inRole(RoleValue.MEMBER), is(false));
 	}
 	
 	@Test
 	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれていない場合_inRoleメソッドはfalseを返す() {
+//		assertThat(selectedUser.inRole(RoleValue.MEMBER), is(false));
 		fail("未実装");
 	}
 
@@ -180,16 +178,12 @@ public class UserTest {
 		
 		User selectedUser = jpa.getEm().find(User.class, new UserId("user004"));
 
-		assertThat(selectedUser.getUserid(), is(user.getUserid()));
-		assertThat(selectedUser.getRoles(), is(user.getRoles()));
-		assertThat(selectedUser.inRole(RoleValue.MEMBER), is(true));
-		assertThat(selectedUser.inRole(RoleValue.ADMIN), is(false));		
 		assertThat(selectedUser.inPermission(PermissionValue.readPlan), is(true));
-		assertThat(selectedUser.inPermission(PermissionValue.writePlan), is(false));
 	}
 	
 	@Test
 	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれていない場合_inPermissionメソッドはfalseを返す() {
+//		assertThat(selectedUser.inPermission(PermissionValue.writePlan), is(false));
 		fail("未実装");
 	}
 }
