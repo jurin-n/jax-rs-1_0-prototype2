@@ -41,14 +41,19 @@ public class UserTest {
 				,A_USER_NAME_FOR_TEST
 				,roles
 				,Status.ACTIVE);
-		
+
 		assertTrue(user.inRole(RoleValue.ADMIN));
 	}
 	
 	@Test
 	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれていない場合_inRoleメソッドはfalseを返す() {
-//		assertThat(selectedUser.inRole(RoleValue.MEMBER), is(false));
-		fail("未実装");
+		User user = new User(
+				 new UserId(A_USER_ID_FOR_TEST)
+				,A_USER_NAME_FOR_TEST
+				,roles
+				,Status.ACTIVE);
+
+		assertFalse(user.inRole(RoleValue.MEMBER));
 	}
 
 	@Test
@@ -64,7 +69,12 @@ public class UserTest {
 	
 	@Test
 	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれていない場合_inPermissionメソッドはfalseを返す() {
-//		assertThat(selectedUser.inPermission(PermissionValue.writePlan), is(false));
-		fail("未実装");
+		User user = new User(
+				 new UserId(A_USER_ID_FOR_TEST)
+				,A_USER_NAME_FOR_TEST
+				,roles
+				,Status.ACTIVE);
+
+		assertFalse(user.inPermission(PermissionValue.writeMenu));
 	}
 }
