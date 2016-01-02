@@ -25,6 +25,9 @@ import com.jurin_n.junit.rules.JPAResource;
 
 public class UserTest {
 
+	private String A_USER_ID_FOR_TEST = "user001";
+	private String A_USER_NAME_FOR_TEST = "テスト　太郎";
+
 	@ClassRule
 	public static JPAResource jpa = new JPAResource();
 
@@ -141,15 +144,15 @@ public class UserTest {
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);
 		User user = new User(
-				 new UserId("user003")
-				,"テスト　アド民"
+				 new UserId(A_USER_ID_FOR_TEST)
+				,A_USER_NAME_FOR_TEST
 				,roles
 				,Status.ACTIVE);
 		jpa.getEm().getTransaction().begin();
 		jpa.getEm().persist(user);
 		jpa.getEm().getTransaction().commit();
 		
-		User selectedUser = jpa.getEm().find(User.class, new UserId("user003"));
+		User selectedUser = jpa.getEm().find(User.class, new UserId(A_USER_ID_FOR_TEST));
 
 		assertTrue(selectedUser.inRole(RoleValue.ADMIN));
 	}
@@ -166,15 +169,15 @@ public class UserTest {
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);
 		User user = new User(
-				 new UserId("user004")
-				,"テスト　メンバー"
+				 new UserId(A_USER_ID_FOR_TEST)
+				,A_USER_NAME_FOR_TEST
 				,roles
 				,Status.ACTIVE);
 		jpa.getEm().getTransaction().begin();
 		jpa.getEm().persist(user);
 		jpa.getEm().getTransaction().commit();
 		
-		User selectedUser = jpa.getEm().find(User.class, new UserId("user004"));
+		User selectedUser = jpa.getEm().find(User.class, new UserId(A_USER_ID_FOR_TEST));
 
 		assertTrue(selectedUser.inPermission(PermissionValue.readPlan));
 	}
