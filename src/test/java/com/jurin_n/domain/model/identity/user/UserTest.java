@@ -16,6 +16,7 @@ public class UserTest {
 
 	private String A_USER_ID_FOR_TEST = "user001";
 	private String A_USER_NAME_FOR_TEST = "テスト　太郎";
+	private String A_ROLE_ID_FOR_TEST = "role001";
 	private Set<Role> roles;
 	private Role role;
 	private Set<PermissionValue> permissions;
@@ -27,6 +28,7 @@ public class UserTest {
 
 		//writePlanのPermissionを保有するADMINロール作成
 		role = new Role();
+		role.setId(A_ROLE_ID_FOR_TEST);
 		role.setValue(RoleValue.ADMIN);
 		permissions.add(PermissionValue.writePlan);
 		permissions.add(PermissionValue.readPlan);

@@ -6,84 +6,76 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.*;
 
 import com.jurin_n.domain.model.identity.user.User;
 import com.jurin_n.domain.model.identity.user.UserDescriptor;
 import com.jurin_n.domain.model.identity.user.UserId;
-import com.jurin_n.junit.rules.JPAResource;
+import com.jurin_n.infrastructure.persistence.JPAUserRepository;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class AuthenticationServiceTest {
-	@ClassRule
-	public static JPAResource jpa = new JPAResource();
-	
-	//テスト対象クラス
-	private AuthenticationService sut;
 
+	//テスト対象クラス
+	@InjectMocks private AuthenticationService sut;
+	@Mock private JPAUserRepository repo;
+	private Map<String, String> headers;
+	
 	@Before
-	public void setUp(){
+	public void create(){
+		headers = new HashMap<>();
+
 		//テスト対象セットアップ
 		sut = new AuthenticationService();
+		MockitoAnnotations.initMocks(this);
+		when(repo.getUserById(new UserId("user001"))).thenReturn(
+				new User(
+						 new UserId("user001")
+						,"モック　太郎"
+						,null
+						,Status.ACTIVE)
+				);
 	}
-	
+
 	@Test
 	public void 正しいユーザ情報を与えられる場合_認証は成功する() {
-		//初期化
-		User user = jpa.getEm().find(User.class, new UserId("user001"));
-		Map<String, String> headers = new HashMap<>();
 		headers.put("Authorization", "user001:xxxx");
 		headers.put("Date", "xxx");
-		
-		//テスト実行
+
 		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
-		
-		//検証
-		assertThat(userDescriptor,is(not(nullValue())));
-		assertThat(userDescriptor.getUserId(),is(user.getUserid()));
+
+		assertThat(userDescriptor.getUserId(), equalTo(new UserId("user001")));
+		assertThat(userDescriptor.getName(), equalTo("モック　太郎"));
 	}
 
 	@Test
 	public void 存在しないユーザ情報を与えられる場合_認証は失敗する() {
-		//初期化
-		Map<String, String> headers = new HashMap<>();
 		headers.put("Authorization", "xxxx001:xxxx");
 		headers.put("Date", "xxx");
-		
-		//テスト実行
+
 		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
-		
-		//検証
+
 		assertThat(userDescriptor,is(nullValue()));
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void Authorizationヘッダを与えられない場合_認証は失敗する() {
-		//初期化
-		Map<String, String> headers = new HashMap<>();
 		headers.put("Date", "xxx");
 
-		//テスト実行
-		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
-		
-		//検証
-		assertThat(userDescriptor,is(nullValue()));
+		sut.authenticateFromHeader(headers);
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void Dateヘッダを与えられない場合_認証は失敗する() {
-		//初期化
-		Map<String, String> headers = new HashMap<>();
 		headers.put("Authorization", "xxx");
 
-		//テスト実行
-		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
-		
-		//検証
-		assertThat(userDescriptor,is(nullValue()));
+		sut.authenticateFromHeader(headers);
 	}
 }

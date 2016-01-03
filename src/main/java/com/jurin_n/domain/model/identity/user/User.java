@@ -19,7 +19,7 @@ public class User {
 	@EmbeddedId
 	private UserId userid;
 	private String name;
-	@OneToMany(cascade = CascadeType.PERSIST)
+	//@OneToMany(cascade = CascadeType.PERSIST)
 	private Set<Role> roles;
 	private Status  status;
 	//private TenantId tenantId; //テナント対応時に追加予定。
