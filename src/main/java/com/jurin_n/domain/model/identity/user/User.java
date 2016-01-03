@@ -39,25 +39,7 @@ public class User {
 	public String getName() {
 		return name;
 	}
-	public Set<Role> getRoles() {
-		return roles;
-	}
-	public Status getStatus() {
-		return status;
-	}
-	public void setUserid(UserId userid) {
-		this.userid = userid;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-	
+
 	//ロールが存在するか確認
 	public boolean inRole(RoleValue aRole) {
 		for(Role role : roles){
