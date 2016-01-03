@@ -34,6 +34,7 @@ public class AuthenticationService {
 		UserDescriptor userDesc = new UserDescriptor(
 										 selectedUser.getUserid()
 										,selectedUser.getName()
+										,selectedUser.getRoles()
 										);
 		return userDesc;
 	}

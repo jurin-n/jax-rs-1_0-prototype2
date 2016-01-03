@@ -1,6 +1,7 @@
 package com.jurin_n.jax_rs.resources;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -12,12 +13,18 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.jurin_n.application.PracticeApplicationService;
+import com.jurin_n.domain.model.identity.AuthenticationService;
+import com.jurin_n.domain.model.identity.permission.PermissionValue;
+import com.jurin_n.domain.model.identity.user.UserDescriptor;
 import com.jurin_n.domain.model.practice.plan.PracticePlan;
 import com.jurin_n.domain.model.practice.plan.PracticePlanId;
 import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
@@ -28,11 +35,38 @@ import com.jurin_n.jax_rs.representation.PracticePlanRepresentation;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PracticePlanResource {
-	@Inject
-	PracticeApplicationService ts;
+	@Context HttpHeaders headers;
+	@Inject private AuthenticationService auth;
+	private UserDescriptor userDescriptor;
+
+	@Inject PracticeApplicationService ts;
 	
+	private void authorization(){
+		MultivaluedMap<String, String> multivaluedMap = headers.getRequestHeaders();
+		HashMap<String,String> map = new HashMap<>();
+		map.put("Authorization", multivaluedMap.get("Authorization").get(0));
+		//map.put("Date", multivaluedMap.get("Date").get(0));
+		map.put("Date", "dummy");
+
+		userDescriptor = auth.authenticateFromHeader(map);
+		
+		if(userDescriptor==null){
+			throw new RuntimeException("認証失敗");
+		}
+	}
+
+	private void checkPermission(PermissionValue permission) {
+		if(userDescriptor.inPermission(permission)==false){
+			throw new RuntimeException("認可失敗");
+		}
+	}
+
 	@GET
 	public Response getPracticePlanList(){
+		authorization();
+		
+		checkPermission(PermissionValue.readPlan);
+	
 		//サービス
 		List<PracticePlan> list = ts.getPracticePlanList();
 	
@@ -45,7 +79,7 @@ public class PracticePlanResource {
 		Response response = this.practicePlanListResponse(list);
 		return response;
 	}
-	
+
 	private Response practicePlanListResponse(List<PracticePlan> list) {
 		List<BaseJsonMarshaller> response = new ArrayList<>();
 		for(PracticePlan plan : list){

@@ -39,7 +39,9 @@ public class User {
 	public String getName() {
 		return name;
 	}
-
+	public Set<Role> getRoles() {
+		return roles;
+	}
 	//ロールが存在するか確認
 	public boolean inRole(RoleValue aRole) {
 		for(Role role : roles){
