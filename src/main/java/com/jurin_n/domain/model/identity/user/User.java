@@ -2,10 +2,8 @@ package com.jurin_n.domain.model.identity.user;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.jurin_n.domain.model.identity.Status;
@@ -19,7 +17,6 @@ public class User {
 	@EmbeddedId
 	private UserId userid;
 	private String name;
-	//@OneToMany(cascade = CascadeType.PERSIST)
 	private Set<Role> roles;
 	private Status  status;
 	//private TenantId tenantId; //テナント対応時に追加予定。

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 import com.jurin_n.domain.model.identity.user.User;
 import com.jurin_n.domain.model.identity.user.UserDescriptor;
 import com.jurin_n.domain.model.identity.user.UserId;
-import com.jurin_n.infrastructure.persistence.JPAUserRepository;
+import com.jurin_n.domain.model.identity.user.UserRepository;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -25,7 +25,7 @@ public class AuthenticationServiceTest {
 
 	//テスト対象クラス
 	@InjectMocks private AuthenticationService sut;
-	@Mock private JPAUserRepository repo;
+	@Mock private UserRepository repo;
 	private Map<String, String> headers;
 	
 	@Before
