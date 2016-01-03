@@ -35,7 +35,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれてる場合_inRoleメソッドはtrueを返す() {
+	public void inRoleメソッドの引数に渡したRoleがUserに含まれてる場合_inRoleメソッドはtrueを返す() {
 		User user = new User(
 				 new UserId(A_USER_ID_FOR_TEST)
 				,A_USER_NAME_FOR_TEST
@@ -46,7 +46,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void test_inRoleメソッドの引数に渡したRoleがUserに含まれていない場合_inRoleメソッドはfalseを返す() {
+	public void inRoleメソッドの引数に渡したRoleがUserに含まれていない場合_inRoleメソッドはfalseを返す() {
 		User user = new User(
 				 new UserId(A_USER_ID_FOR_TEST)
 				,A_USER_NAME_FOR_TEST
@@ -57,7 +57,7 @@ public class UserTest {
 	}
 
 	@Test
-	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれている場合_inPermissionメソッドはtrueを返す() {
+	public void inPermissionメソッドの引数に渡したPermissionがUserに含まれている場合_inPermissionメソッドはtrueを返す() {
 		User user = new User(
 				 new UserId(A_USER_ID_FOR_TEST)
 				,A_USER_NAME_FOR_TEST
@@ -68,7 +68,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void test_inPermissionメソッドの引数に渡したPermissionがUserに含まれていない場合_inPermissionメソッドはfalseを返す() {
+	public void inPermissionメソッドの引数に渡したPermissionがUserに含まれていない場合_inPermissionメソッドはfalseを返す() {
 		User user = new User(
 				 new UserId(A_USER_ID_FOR_TEST)
 				,A_USER_NAME_FOR_TEST
