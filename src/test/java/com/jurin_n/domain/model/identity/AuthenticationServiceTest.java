@@ -32,7 +32,7 @@ public class AuthenticationServiceTest {
 	}
 	
 	@Test
-	public void test_authenticateFromHeader_認証成功() {
+	public void 正しいユーザ情報を与えられる場合_認証は成功する() {
 		//初期化
 		User user = jpa.getEm().find(User.class, new UserId("user001"));
 		Map<String, String> headers = new HashMap<>();
@@ -48,7 +48,7 @@ public class AuthenticationServiceTest {
 	}
 
 	@Test
-	public void test_authenticateFromHeader_存在しないユーザIDのため認証失敗() {
+	public void 存在しないユーザ情報を与えられる場合_認証は失敗する() {
 		//初期化
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Authorization", "xxxx001:xxxx");
@@ -62,7 +62,7 @@ public class AuthenticationServiceTest {
 	}
 	
 	@Test
-	public void test_authenticateFromHeader_Authorizationヘッダがないため認証失敗() {
+	public void Authorizationヘッダを与えられない場合_認証は失敗する() {
 		//初期化
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Date", "xxx");
@@ -75,7 +75,7 @@ public class AuthenticationServiceTest {
 	}
 	
 	@Test
-	public void test_authenticateFromHeader_Dateヘッダがないため認証失敗() {
+	public void Dateヘッダを与えられない場合_認証は失敗する() {
 		//初期化
 		Map<String, String> headers = new HashMap<>();
 		headers.put("Authorization", "xxx");

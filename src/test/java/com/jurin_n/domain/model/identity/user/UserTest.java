@@ -29,6 +29,7 @@ public class UserTest {
 		role = new Role();
 		role.setValue(RoleValue.ADMIN);
 		permissions.add(PermissionValue.writePlan);
+		permissions.add(PermissionValue.readPlan);
 		role.setPermissions(permissions);
 
 		roles.add(role);
