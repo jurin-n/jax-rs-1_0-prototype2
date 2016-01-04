@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -27,6 +28,8 @@ import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.user.UserDescriptor;
 import com.jurin_n.domain.model.practice.plan.PracticePlan;
 import com.jurin_n.domain.model.practice.plan.PracticePlanId;
+import com.jurin_n.jax_rs.exception.AuthenticationException;
+import com.jurin_n.jax_rs.exception.AuthorizationException;
 import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
 import com.jurin_n.jax_rs.representation.PracticePlanRepresentation;
 
@@ -40,44 +43,45 @@ public class PracticePlanResource {
 	private UserDescriptor userDescriptor;
 
 	@Inject PracticeApplicationService ts;
-	
+
 	private void authorization(){
 		MultivaluedMap<String, String> multivaluedMap = headers.getRequestHeaders();
 		HashMap<String,String> map = new HashMap<>();
 		map.put("Authorization", multivaluedMap.get("Authorization").get(0));
 		//map.put("Date", multivaluedMap.get("Date").get(0));
 		map.put("Date", "dummy");
-
+		
 		userDescriptor = auth.authenticateFromHeader(map);
 		
 		if(userDescriptor==null){
-			throw new RuntimeException("認証失敗");
+			throw new AuthenticationException("認証失敗");
 		}
 	}
 
-	private void checkPermission(PermissionValue permission) {
+	private void checkPermissions(PermissionValue permission) {
 		if(userDescriptor.inPermission(permission)==false){
-			throw new RuntimeException("認可失敗");
+			throw new AuthorizationException("認可失敗");
 		}
 	}
 
 	@GET
 	public Response getPracticePlanList(){
+		//認証
 		authorization();
-		
-		checkPermission(PermissionValue.readPlan);
+
+		//認可
+		checkPermissions(PermissionValue.readPlan);
 	
-		//サービス
+		//サービス呼び出し
 		List<PracticePlan> list = ts.getPracticePlanList();
 	
-		//レスポンス
+		//レスポンス生成
 		if(list == null){
 			return Response
 					.status(Response.Status.NOT_FOUND)
 					.build(); 	
 		}
-		Response response = this.practicePlanListResponse(list);
-		return response;
+		return this.practicePlanListResponse(list);
 	}
 
 	private Response practicePlanListResponse(List<PracticePlan> list) {
