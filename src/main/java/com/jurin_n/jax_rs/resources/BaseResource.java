@@ -18,7 +18,7 @@ public class BaseResource {
 	@Inject private AuthenticationService auth;
 	protected UserDescriptor userDescriptor;
 	
-	protected void authorization(){
+	protected void authentication(){
 		MultivaluedMap<String, String> multivaluedMap = headers.getRequestHeaders();
 		HashMap<String,String> map = new HashMap<>();
 		map.put("Authorization", multivaluedMap.get("Authorization").get(0));

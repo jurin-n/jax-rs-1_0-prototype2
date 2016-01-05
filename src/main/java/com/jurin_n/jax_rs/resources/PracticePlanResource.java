@@ -31,11 +31,11 @@ import com.jurin_n.jax_rs.representation.PracticePlanRepresentation;
 public class PracticePlanResource extends BaseResource{
 
 	@Inject PracticeApplicationService ts;
-
+	
 	@GET
 	public Response getPracticePlanList(){
 		//認証
-		authorization();
+		authentication();
 
 		//認可
 		checkPermissions(PermissionValue.readPlan);
