@@ -34,9 +34,6 @@ public class PracticePlanResource extends BaseResource{
 	
 	@GET
 	public Response getPracticePlanList(){
-		//認証
-		authentication();
-
 		//認可
 		checkPermissions(PermissionValue.readPlan);
 	
