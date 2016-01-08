@@ -31,7 +31,7 @@ import com.jurin_n.jax_rs.representation.PracticePlanRepresentation;
 public class PracticePlanResource extends BaseResource{
 
 	@Inject PracticeApplicationService ts;
-	
+	/*
 	@GET
 	public Response getPracticePlanList(){
 		//認可
@@ -48,7 +48,27 @@ public class PracticePlanResource extends BaseResource{
 		}
 		return this.practicePlanListResponse(list);
 	}
+	*/
+	
+	@GET
+	public Response get(){
+		return process("getPracticePlanList");
+	}
+	
+	@Permmisions(PermissionValue.readPlan)
+	public Response getPracticePlanList(){
+		//サービス呼び出し
+		List<PracticePlan> list = ts.getPracticePlanList();
 
+		//レスポンス生成
+		if(list == null){
+			return Response
+					.status(Response.Status.NOT_FOUND)
+					.build(); 	
+		}
+		return this.practicePlanListResponse(list);
+	}
+	
 	private Response practicePlanListResponse(List<PracticePlan> list) {
 		List<BaseJsonMarshaller> response = new ArrayList<>();
 		for(PracticePlan plan : list){
