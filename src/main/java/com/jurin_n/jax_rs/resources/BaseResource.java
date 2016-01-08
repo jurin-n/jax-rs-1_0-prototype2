@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import com.jurin_n.domain.model.identity.AuthenticationService;
 import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.user.UserDescriptor;
+import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
 
 public class BaseResource {
 	@Context HttpHeaders headers;
@@ -39,6 +40,18 @@ public class BaseResource {
 		if(userDescriptor.inPermission(permission)==false){
 			throw new WebApplicationException(Response.Status.FORBIDDEN);
 		}
+	}
+	
+	protected Response process(String method, String... param) {
+		return null;
+	}
+	
+	protected Response process(String method, BaseJsonMarshaller json) {
+		return null;
+	}
+	
+	protected Response process(String method, String id, BaseJsonMarshaller json) {
+		return null;
 	}
 	
 	protected Response process(String method) {
