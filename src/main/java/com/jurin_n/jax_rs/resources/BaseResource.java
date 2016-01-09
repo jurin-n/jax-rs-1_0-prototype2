@@ -14,8 +14,6 @@ import javax.ws.rs.core.Response;
 import com.jurin_n.domain.model.identity.AuthenticationService;
 import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.user.UserDescriptor;
-import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
-import com.jurin_n.jax_rs.resources.common.BaseProcess;
 
 public class BaseResource {
 	@Context HttpHeaders headers;
@@ -43,91 +41,22 @@ public class BaseResource {
 		}
 	}
 	
-	//TODO このメソッド必要か再考。
-	protected Response process(final String methodName, final String... param) {
-
-		BaseProcess baseProcess = new BaseProcess(this){
-			@Override
-			public void createMethod() throws Exception{
-				method = baseResource.getClass().getDeclaredMethod(methodName,String[].class);
-			}
-			
-			@Override
-			public Response invokeMethod() throws Exception{
-				return (Response)method.invoke(baseResource,param);
-			}
-		};
-
-		return process(baseProcess);
-	}
-
-	protected Response process(final String methodName) {
-
-		BaseProcess baseProcess = new BaseProcess(this){
-			@Override
-			public void createMethod() throws Exception{
-				method = baseResource.getClass().getDeclaredMethod(methodName);
-			}
-			
-			@Override
-			public Response invokeMethod() throws Exception{
-				return (Response)method.invoke(baseResource);
-			}
-		};
-
-		return process(baseProcess);
-	}
-
-	protected Response process(final String methodName, final BaseJsonMarshaller json) {
-
-		BaseProcess baseProcess = new BaseProcess(this){
-			@Override
-			public void createMethod() throws Exception{
-				method = baseResource.getClass().getDeclaredMethod(methodName, BaseJsonMarshaller.class);
-			}
-			
-			@Override
-			public Response invokeMethod() throws Exception{
-				return (Response)method.invoke(baseResource,json);
-			}
-		};
-
-		return process(baseProcess);
-	}
-	
-	protected Response process(final String methodName, final String id
-								, final BaseJsonMarshaller json) {
-
-		BaseProcess baseProcess = new BaseProcess(this){
-			@Override
-			public void createMethod() throws Exception{
-				method = baseResource.getClass().getDeclaredMethod(
-									 methodName
-									,String.class
-									,BaseJsonMarshaller.class
-									);
-			}
-			
-			@Override
-			public Response invokeMethod() throws Exception{
-				return (Response)method.invoke(baseResource,id,json);
-			}
-		};
-
-		return process(baseProcess);
-	}
-
-	protected Response process(BaseProcess baseProcess){
+	protected Response process(String methodName, Object... params){
 		Response res = null;
 		try {
+			Class<?>[] clazzes = new Class<?>[params.length];
+			for(int i=0 ; i< params.length ; i++){
+				clazzes[i] = params[i].getClass();
+			}
+			
 			//Method作成
-			baseProcess.createMethod();
-	
+			Method method = this.getClass().getDeclaredMethod(methodName,clazzes);	
+
 			//前処理
-			beforeProcess(baseProcess.getMethod());
-	
+			beforeProcess(method);
+
 			//メソッド呼び出し
-			res = baseProcess.invokeMethod();
+			res = (Response) method.invoke(this,params);
 	
 			//後処理
 			afterProcess();
@@ -139,7 +68,7 @@ public class BaseResource {
 		}
 		return res;
 	}
-
+	
 	private void beforeProcess(Method method){
 		//TODO 処理時間計測開始
 
