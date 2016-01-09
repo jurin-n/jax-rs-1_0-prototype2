@@ -15,6 +15,7 @@ import com.jurin_n.domain.model.identity.AuthenticationService;
 import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.user.UserDescriptor;
 import com.jurin_n.jax_rs.providers.BaseJsonMarshaller;
+import com.jurin_n.jax_rs.resources.common.BaseProcess;
 
 public class BaseResource {
 	@Context HttpHeaders headers;
@@ -43,58 +44,90 @@ public class BaseResource {
 	}
 	
 	//TODO このメソッド必要か再考。
-	protected Response process(String method, String... param) {
-		Response res = null;
-		try {
-			Method m = this.getClass().getDeclaredMethod(method,String[].class);
+	protected Response process(final String methodName, final String... param) {
 
-			//前処理
-			beforeProcess(m);
-
-			//メソッド呼び出し
-			res = (Response)m.invoke(this,param); //TODO 警告の対応。
-
-			//後処理
-			afterProcess();
-
-		} catch (WebApplicationException e){
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
-		}
-		return res;
-	}
-	
-	//TODO processメソッドを下記のようにかけないか検討。実現できたら、Exception処理とか前処理.処理の手続きを１つにまとめることできるはず。
-	/*
-	protected Response process(String method, BaseJsonMarshaller json) {
-		ProcessMethod processMethod = new (
+		BaseProcess baseProcess = new BaseProcess(this){
 			@Override
-			public void createMethod(){
-				m = this.getClass().getDeclaredMethod(method,BaseJsonMarshaller.class);
+			public void createMethod() throws Exception{
+				method = baseResource.getClass().getDeclaredMethod(methodName,String[].class);
 			}
 			
 			@Override
-			public Response invokeMethod(){
-				return (Response)m.invoke(this,json);
+			public Response invokeMethod() throws Exception{
+				return (Response)method.invoke(baseResource,param);
 			}
-		);
+		};
 
-		return process(processMethod);
+		return process(baseProcess);
+	}
+
+	protected Response process(final String methodName) {
+
+		BaseProcess baseProcess = new BaseProcess(this){
+			@Override
+			public void createMethod() throws Exception{
+				method = baseResource.getClass().getDeclaredMethod(methodName);
+			}
+			
+			@Override
+			public Response invokeMethod() throws Exception{
+				return (Response)method.invoke(baseResource);
+			}
+		};
+
+		return process(baseProcess);
+	}
+
+	protected Response process(final String methodName, final BaseJsonMarshaller json) {
+
+		BaseProcess baseProcess = new BaseProcess(this){
+			@Override
+			public void createMethod() throws Exception{
+				method = baseResource.getClass().getDeclaredMethod(methodName, BaseJsonMarshaller.class);
+			}
+			
+			@Override
+			public Response invokeMethod() throws Exception{
+				return (Response)method.invoke(baseResource,json);
+			}
+		};
+
+		return process(baseProcess);
 	}
 	
-	protected Response process(ProcessMethod processMethod){
+	protected Response process(final String methodName, final String id
+								, final BaseJsonMarshaller json) {
+
+		BaseProcess baseProcess = new BaseProcess(this){
+			@Override
+			public void createMethod() throws Exception{
+				method = baseResource.getClass().getDeclaredMethod(
+									 methodName
+									,String.class
+									,BaseJsonMarshaller.class
+									);
+			}
+			
+			@Override
+			public Response invokeMethod() throws Exception{
+				return (Response)method.invoke(baseResource,id,json);
+			}
+		};
+
+		return process(baseProcess);
+	}
+
+	protected Response process(BaseProcess baseProcess){
 		Response res = null;
 		try {
 			//Method作成
-			processMethod.createMethod();
+			baseProcess.createMethod();
 	
 			//前処理
-			beforeProcess(processMethod.getMethod());
+			beforeProcess(baseProcess.getMethod());
 	
 			//メソッド呼び出し
-			res = processMethod.invokeMethod();
+			res = baseProcess.invokeMethod();
 	
 			//後処理
 			afterProcess();
@@ -106,78 +139,7 @@ public class BaseResource {
 		}
 		return res;
 	}
-	
-	*/
-	
-	protected Response process(String method, BaseJsonMarshaller json) {
-		Response res = null;
-		try {
-			Method m = this.getClass().getDeclaredMethod(method,BaseJsonMarshaller.class);
 
-			//前処理
-			beforeProcess(m);
-
-			//メソッド呼び出し
-			res = (Response)m.invoke(this,json);
-
-			//後処理
-			afterProcess();
-
-		} catch (WebApplicationException e){
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
-		}
-		return res;
-	}
-	
-	protected Response process(String method, String id, BaseJsonMarshaller json) {
-		Response res = null;
-		try {
-			Method m = this.getClass().getDeclaredMethod(method,String.class,BaseJsonMarshaller.class);
-
-			//前処理
-			beforeProcess(m);
-
-			//メソッド呼び出し
-			res = (Response)m.invoke(this,id,json);
-
-			//後処理
-			afterProcess();
-			
-		} catch (WebApplicationException e){
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
-		}
-		return res;
-	}
-	
-	protected Response process(String method) {
-		Response res = null;
-		try {
-			Method m = this.getClass().getDeclaredMethod(method);
-
-			//前処理
-			beforeProcess(m);
-
-			//メソッド呼び出し
-			res = (Response)m.invoke(this);
-
-			//後処理
-			afterProcess();
-			
-		} catch (WebApplicationException e){
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
-		}
-		return res;
-	}
-	
 	private void beforeProcess(Method method){
 		//TODO 処理時間計測開始
 
