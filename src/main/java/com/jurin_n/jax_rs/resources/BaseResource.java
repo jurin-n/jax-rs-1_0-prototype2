@@ -76,12 +76,37 @@ public class BaseResource {
 			}
 			
 			@Override
-			public void invokeMethod(){
-				res = (Response)m.invoke(this,json);
+			public Response invokeMethod(){
+				return (Response)m.invoke(this,json);
 			}
-		)
-		return processMethod.process();
+		);
+
+		return process(processMethod);
 	}
+	
+	protected Response process(ProcessMethod processMethod){
+		Response res = null;
+		try {
+			//Method作成
+			processMethod.createMethod();
+	
+			//前処理
+			beforeProcess(processMethod.getMethod());
+	
+			//メソッド呼び出し
+			res = processMethod.invokeMethod();
+	
+			//後処理
+			afterProcess();
+		} catch (WebApplicationException e){
+			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+		}
+		return res;
+	}
+	
 	*/
 	
 	protected Response process(String method, BaseJsonMarshaller json) {
