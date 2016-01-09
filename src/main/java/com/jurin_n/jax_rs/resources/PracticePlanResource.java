@@ -51,7 +51,7 @@ public class PracticePlanResource extends BaseResource{
 	*/
 	
 	@GET
-	public Response get(){
+	public Response getList(){
 		return process("getPracticePlanList");
 	}
 	
