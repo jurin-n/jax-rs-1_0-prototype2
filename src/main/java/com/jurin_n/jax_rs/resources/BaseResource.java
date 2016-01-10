@@ -11,16 +11,21 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import com.jurin_n.domain.model.identity.Authentication;
+import com.jurin_n.domain.model.identity.AuthenticationFactory;
 import com.jurin_n.domain.model.identity.AuthenticationService;
+import com.jurin_n.domain.model.identity.Authentications;
 import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.user.UserDescriptor;
 
 public class BaseResource {
 	@Context HttpHeaders headers;
 	@Context HttpServletRequest servletRequest;
-	@Inject private AuthenticationService auth;
+	@Inject private AuthenticationService authService;
 	protected UserDescriptor userDescriptor;
-
+	protected Authentications selectedAuthentication = Authentications.Sha1Authentication;
+	private Authentication authLogic;
+	
 	protected void callAuthenticationService() {
 		MultivaluedMap<String, String> multivaluedMap = headers.getRequestHeaders();
 		HashMap<String,String> map = new HashMap<>();
@@ -28,7 +33,8 @@ public class BaseResource {
 		//map.put("Date", multivaluedMap.get("Date").get(0));
 		map.put("Date", "dummy"); //TODO Dateヘッダ取得ロジック追加
 
-		userDescriptor = auth.authenticateFromHeader(map);
+		authLogic = AuthenticationFactory.newInstance(selectedAuthentication);
+		userDescriptor = authService.execute(authLogic,map);
 
 		if(userDescriptor==null){
 			throw new WebApplicationException(Response.Status.UNAUTHORIZED);

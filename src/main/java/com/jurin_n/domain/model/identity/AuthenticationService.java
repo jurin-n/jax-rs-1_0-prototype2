@@ -15,39 +15,34 @@ public class AuthenticationService {
 	@Inject
 	private UserRepository repo;
 
-	private String dateHeader = null;
-	private String authHeader = null;
 	private String userId = null;
 	private String authKey = null;
 	
-	public UserDescriptor authenticateFromHeader(Map<String, String> headers) {
-		//Headerから必要な情報を取得し、フィールドにセット
-		setFiledsForAuth(headers);
-
+	public UserDescriptor execute(Authentication auth, Map<String, String> headers) {
+		//userId取得
+		userId = auth.getUserId(headers);
+		if(userId == null){
+			return null;
+		}
+		
 		//ユーザIDをキーにリポジトリからユーザ情報を取得
 		User selectedUser = repo.getUserById(new UserId(userId));
 		if(selectedUser == null){
 			return null;
 		}
-
-		//アプリケーションで利用できるユーザ情報を設定
-		UserDescriptor userDesc = new UserDescriptor(
-										 selectedUser.getUserid()
-										,selectedUser.getName()
-										,selectedUser.getRoles()
-										);
-		return userDesc;
-	}
-
-	private void setFiledsForAuth(Map<String, String> headers) {
-		dateHeader = headers.get("Date");
-		authHeader = headers.get("Authorization");
-
-		if (dateHeader == null || authHeader == null) {
-			throw new IllegalArgumentException();
+		
+		//認証処理
+		if(auth.authenticate(headers, selectedUser)){
+			//認証成功
+			//アプリケーションで利用できるユーザ情報を設定
+			UserDescriptor userDesc = new UserDescriptor(
+											 selectedUser.getUserid()
+											,selectedUser.getName()
+											,selectedUser.getRoles()
+											);
+			return userDesc;
 		}
-
-		userId = authHeader.split(":")[0];
-		authKey = authHeader.split(":")[1];
+		
+		return null;
 	}
 }

@@ -27,13 +27,17 @@ public class AuthenticationServiceTest {
 	@InjectMocks private AuthenticationService sut;
 	@Mock private UserRepository repo;
 	private Map<String, String> headers;
-	
+	private Authentication auth;
+
 	@Before
 	public void create(){
 		headers = new HashMap<>();
 
 		//テスト対象セットアップ
 		sut = new AuthenticationService();
+		auth = AuthenticationFactory
+				.newInstance(Authentications.Sha1Authentication);
+
 		MockitoAnnotations.initMocks(this);
 		when(repo.getUserById(new UserId("user001"))).thenReturn(
 				new User(
@@ -45,37 +49,41 @@ public class AuthenticationServiceTest {
 	}
 
 	@Test
-	public void 正しいユーザ情報を与えられる場合_認証は成功する() {
+	public void 正しいユーザ情報を与えられる場合_Sha1認証は成功する() {
 		headers.put("Authorization", "user001:xxxx");
 		headers.put("Date", "xxx");
-
-		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
+		
+		UserDescriptor userDescriptor = sut.execute(auth,headers);
 
 		assertThat(userDescriptor.getUserId(), equalTo(new UserId("user001")));
 		assertThat(userDescriptor.getName(), equalTo("モック　太郎"));
 	}
 
 	@Test
-	public void 存在しないユーザ情報を与えられる場合_認証は失敗する() {
+	public void 存在しないユーザ情報を与えられる場合_Sha1認証は失敗する() {
 		headers.put("Authorization", "xxxx001:xxxx");
 		headers.put("Date", "xxx");
 
-		UserDescriptor userDescriptor = sut.authenticateFromHeader(headers);
+		UserDescriptor userDescriptor = sut.execute(auth,headers);
 
 		assertThat(userDescriptor,is(nullValue()));
 	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void Authorizationヘッダを与えられない場合_認証は失敗する() {
+
+	@Test
+	public void Authorizationヘッダを与えられない場合_Sha1認証は失敗する() {
 		headers.put("Date", "xxx");
 
-		sut.authenticateFromHeader(headers);
+		UserDescriptor userDescriptor = sut.execute(auth,headers);
+
+		assertThat(userDescriptor,is(nullValue()));
 	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void Dateヘッダを与えられない場合_認証は失敗する() {
+
+	@Test
+	public void Dateヘッダを与えられない場合_Sha1認証は失敗する() {
 		headers.put("Authorization", "xxx");
 
-		sut.authenticateFromHeader(headers);
+		UserDescriptor userDescriptor = sut.execute(auth,headers);
+
+		assertThat(userDescriptor,is(nullValue()));
 	}
 }
