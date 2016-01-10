@@ -86,4 +86,14 @@ public class AuthenticationServiceTest {
 
 		assertThat(userDescriptor,is(nullValue()));
 	}
+	
+	@Test
+	public void Authorizationヘッダが不正な値の場合_Sha1認証は失敗する() {
+		headers.put("Authorization", "user001xxxx"); //:で区切られてない
+		headers.put("Date", "xxx");
+
+		UserDescriptor userDescriptor = sut.execute(auth,headers);
+
+		assertThat(userDescriptor,is(nullValue()));
+	}
 }
