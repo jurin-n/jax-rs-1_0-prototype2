@@ -21,7 +21,7 @@ public class BaseResource {
 	@Inject private AuthenticationService auth;
 	protected UserDescriptor userDescriptor;
 
-	protected void authentication() {
+	protected void callAuthenticationService() {
 		MultivaluedMap<String, String> multivaluedMap = headers.getRequestHeaders();
 		HashMap<String,String> map = new HashMap<>();
 		map.put("Authorization", multivaluedMap.get("Authorization").get(0));
@@ -72,8 +72,8 @@ public class BaseResource {
 	private void beforeProcess(Method method){
 		//TODO 処理時間計測開始
 
-		//認証
-		authentication();
+		//認証サービスを呼び出す
+		callAuthenticationService();
 		
 		//権限チェック
 		checkPermissions(method.getAnnotation(Permmisions.class).value());
