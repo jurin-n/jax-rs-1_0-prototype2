@@ -80,7 +80,7 @@ public class AuthenticationServiceTest {
 
 	@Test
 	public void Dateヘッダを与えられない場合_Sha1認証は失敗する() {
-		headers.put("Authorization", "xxx");
+		headers.put("Authorization", "user001:xxxx");
 
 		UserDescriptor userDescriptor = sut.execute(auth,headers);
 
