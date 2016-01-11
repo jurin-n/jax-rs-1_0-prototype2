@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -18,12 +17,11 @@ import com.jurin_n.domain.model.identity.Authentications;
 import com.jurin_n.domain.model.identity.permission.PermissionValue;
 import com.jurin_n.domain.model.identity.user.UserDescriptor;
 
-public class BaseResource {
-	@Context HttpHeaders headers;
-	@Context HttpServletRequest servletRequest;
+class BaseResource {
+	@Context private HttpHeaders headers;
 	@Inject private AuthenticationService authService;
-	protected UserDescriptor userDescriptor;
-	protected Authentications selectedAuthentication = Authentications.Sha1Authentication;
+	private UserDescriptor userDescriptor;
+	private Authentications selectedAuthentication = Authentications.Sha1Authentication;
 	private Authentication authLogic;
 	
 	protected void callAuthenticationService() {
